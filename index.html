@@ -23,6 +23,21 @@
     em {
       color: #555;
     }
+    .confetti {
+  position: fixed;
+  top: -10px;
+  font-size: 24px;
+  animation: fall 2s linear forwards;
+  z-index: 9999;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(110vh);
+    opacity: 0;
+  }
+}
+
   </style>
 </head>
 
@@ -120,26 +135,31 @@ if (isBirthday) {
     }
   }
 
-  function launchConfetti() {
-  const confetti = document.createElement("div");
-  confetti.innerText = "🎉";
-  confetti.style.position = "fixed";
-  confetti.style.top = "20px";
-  confetti.style.left = "50%";
-  confetti.style.transform = "translateX(-50%)";
-  confetti.style.fontSize = "48px";
-  confetti.style.zIndex = "9999";
-  document.body.appendChild(confetti);
+function launchConfetti() {
+  const confettiCount = 40;
 
-  setTimeout(() => {
-    confetti.remove();
-  }, 1500);
+  for (let i = 0; i < confettiCount; i++) {
+    const confetti = document.createElement("div");
+    confetti.className = "confetti";
+    confetti.innerText = "🎉";
+
+    confetti.style.left = Math.random() * 100 + "vw";
+    confetti.style.animationDuration = 1.5 + Math.random() * 1.5 + "s";
+
+    document.body.appendChild(confetti);
+
+    setTimeout(() => {
+      confetti.remove();
+    }, 3000);
+  }
 }
+
 
 </script>
 
 </body>
 </html>
+
 
 
 
