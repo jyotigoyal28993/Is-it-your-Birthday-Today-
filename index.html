@@ -30,6 +30,21 @@
 
 <div id="main-message"></div>
 
+  <div id="lock" style="display:none;">
+  <p>
+    System locked.<br/>
+    Enter password to continue.
+  </p>
+
+  <p style="font-size:14px; color:#555;">
+    Hint: Month and year you landed in the US<br/>
+    (no space, lowercase)<br/>
+    e.g. <em>december2050</em>
+  </p>
+
+  <input type="password" id="password" placeholder="Password" />
+  <button onclick="unlock()">Unlock</button>
+</div>
 <div id="details" style="display:none;">
 
   <div class="section">
@@ -66,25 +81,37 @@
 </div>
 
 <script>
- //const today = new Date();
   // PREVIEW MODE — remove before Dec 25
-const today = new Date(2025, 11, 25); // Dec 25
+  const today = new Date(2025, 11, 25); // Dec 25
 
   const isBirthday =
     today.getDate() === 25 &&
     today.getMonth() === 11;
 
   const mainMessage = document.getElementById("main-message");
+  const lock = document.getElementById("lock");
   const details = document.getElementById("details");
 
   if (isBirthday) {
     mainMessage.innerText = "🎂 Happy Birthday";
-    details.style.display = "block";
+    lock.style.display = "block";
   } else {
     mainMessage.innerText = "Nope.";
+  }
+
+  function unlock() {
+    const input = document.getElementById("password").value.toLowerCase();
+
+    if (input === "december2022") {
+      lock.innerHTML = "<p>System unlocked.</p>";
+      details.style.display = "block";
+    } else {
+      alert("Not quite. Try again 🙂");
+    }
   }
 </script>
 
 </body>
 </html>
+
 
