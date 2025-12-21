@@ -1,182 +1,257 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Birthday Live</title>
+  <title>Birthday Dashboard</title>
   <style>
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
       text-align: center;
-      padding: 60px 20px;
+      margin: 0;
+      padding: 40px 20px;
+      background: linear-gradient(to bottom, #fffaf0, #ffe6f2);
+      overflow-x: hidden;
     }
+
+    /* Celebration section */
     #main-message {
-      font-size: 36px;
-      font-weight: 600;
+      font-size: 40px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    #sub-message {
+      font-size: 18px;
       margin-bottom: 40px;
-    }
-    .section {
-      text-align: left;
-      margin-top: 30px;
-      max-width: 520px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    em {
       color: #555;
     }
-.ribbon {
-  position: fixed;
-  top: -20px;          /* START above the screen */
-  width: 6px;
-  height: 18px;
-  border-radius: 3px;
-  opacity: 0.9;
-  z-index: 9999;
-  pointer-events: none; /* don’t block clicks */
-  animation: fall linear forwards;
-}
 
+    /* Ribbons */
+    .ribbon {
+      position: fixed;
+      top: -20px;
+      width: 6px;
+      height: 18px;
+      border-radius: 3px;
+      opacity: 0.9;
+      z-index: 9999;
+      pointer-events: none;
+      animation: ribbonFall linear forwards;
+    }
+    @keyframes ribbonFall {
+      0% { transform: translateY(0) rotate(0deg) translateX(0); opacity:1; }
+      50% { transform: translateY(50vh) rotate(180deg) translateX(10px);}
+      100% { transform: translateY(95vh) rotate(360deg) translateX(-10px); opacity:0;}
+    }
 
-@keyframes fall {
-  0% {
-    transform: translateY(0) rotate(0deg) translateX(0);
-    opacity: 1;
-  }
-  50% {
-    transform: translateY(50vh) rotate(180deg) translateX(10px);
-  }
-  100% {
-    transform: translateY(95vh) rotate(360deg) translateX(-10px);
-    opacity: 0;
-  }
-}
+    /* Dashboard container */
+    #dashboard {
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: left;
+    }
+
+    /* Behavior cards */
+    .behavior-card {
+      background-color: #fff0f5;
+      border-radius: 12px;
+      padding: 15px 20px;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.6s ease;
+    }
+    .behavior-card.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .behavior-title {
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .behavior-bar-container {
+      width: 100%;
+      background: #ffe6f2;
+      border-radius: 8px;
+      height: 12px;
+      margin-bottom: 5px;
+      overflow: hidden;
+    }
+    .behavior-bar {
+      height: 12px;
+      border-radius: 8px;
+      background: #ff99cc;
+      width: 0;
+    }
+    .behavior-comment {
+      font-size: 14px;
+      color: #555;
+    }
+
+    /* Bonus card */
+    .bonus-card {
+      background-color: #e8daef;
+      border-radius: 12px;
+      padding: 15px 20px;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      cursor: pointer;
+    }
+    .bonus-card p {
+      display: none;
+      margin-top: 8px;
+      font-style: italic;
+    }
+
+    /* LLM panel */
+    #llm-panel {
+      background-color: #d5f5e3;
+      border-radius: 12px;
+      padding: 15px 20px;
+      margin-top: 30px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    #llm-extra {
+      margin-top: 8px;
+      font-style: italic;
+    }
+    #llm-panel button {
+      margin-top: 10px;
+      padding: 6px 12px;
+      border-radius: 8px;
+      border: none;
+      background-color: #a2d9ce;
+      cursor: pointer;
+      font-weight: 600;
+    }
   </style>
 </head>
-
 <body>
 
 <div id="main-message"></div>
-<div id="secondary-message" style="font-size:28px; font-weight:500; margin-top:10px;"></div>
-<p id="sub-message" style="color:#555; margin-top:15px;"></p>
+<div id="sub-message"></div>
 
-  <div id="lock" style="display:none;">
-  <p>
-    System locked.<br/>
-    Enter password to continue.
-  </p>
+<div id="dashboard" style="display:none;">
 
-  <p style="font-size:14px; color:#555;">
-    Hint: Month and year you landed in the US<br/>
-    (no space, lowercase)<br/>
-    e.g. <em>december2050</em>
-  </p>
-
-  <input type="password" id="password" placeholder="Password" />
-  <button onclick="unlock()">Unlock</button>
-</div>
-<div id="details" style="display:none;">
-
-  <div class="section">
-    <strong>Observed User Behaviors</strong><br/>
-    <em>(Automatically inferred. Not editable.)</em>
-
-    <p>• Overthinks decisions before committing<br/>
-    → Result: High-quality outcomes</p>
-
-    <p>• Extremely practical<br/>
-    → Optimizes for feasibility over hype</p>
-
-    <p>• Detail-oriented<br/>
-    → Notices what most systems ignore</p>
-
-    <p>• Ambitious<br/>
-    → Sets bars slightly higher than required</p>
-
-    <p>• Highly considerate<br/>
-    → Accounts for impact on others</p>
-
-    <p>• Extra lovable<br/>
-    → System unable to quantify this metric</p>
+  <!-- Behavior Cards -->
+  <div class="behavior-card">
+    <div class="behavior-title">Overthink Index: 87%</div>
+    <div class="behavior-bar-container">
+      <div class="behavior-bar" style="width:0%"></div>
+    </div>
+    <div class="behavior-comment">Careful decision-making leads to high-quality outcomes.</div>
   </div>
 
-  <div class="section">
-    <em>
-      AI Decision Engine:<br/>
-      After analyzing 365 days of data,<br/>
-      today was selected as the optimal launch date.
-    </em>
+  <div class="behavior-card">
+    <div class="behavior-title">Practicality Score: 92%</div>
+    <div class="behavior-bar-container">
+      <div class="behavior-bar" style="width:0%"></div>
+    </div>
+    <div class="behavior-comment">Always finds feasible solutions.</div>
+  </div>
+
+  <div class="behavior-card">
+    <div class="behavior-title">Attention to Detail: 95%</div>
+    <div class="behavior-bar-container">
+      <div class="behavior-bar" style="width:0%"></div>
+    </div>
+    <div class="behavior-comment">Notices patterns most people miss.</div>
+  </div>
+
+  <div class="behavior-card">
+    <div class="behavior-title">Ambition Quotient: 88%</div>
+    <div class="behavior-bar-container">
+      <div class="behavior-bar" style="width:0%"></div>
+    </div>
+    <div class="behavior-comment">Pushes goals just above the usual bar.</div>
+  </div>
+
+  <div class="behavior-card">
+    <div class="behavior-title">Consideration Factor: 94%</div>
+    <div class="behavior-bar-container">
+      <div class="behavior-bar" style="width:0%"></div>
+    </div>
+    <div class="behavior-comment">Subtle empathy, big impact.</div>
+  </div>
+
+  <div class="behavior-card">
+    <div class="behavior-title">Lovability Metric: 100%</div>
+    <div class="behavior-bar-container">
+      <div class="behavior-bar" style="width:100%"></div>
+    </div>
+    <div class="behavior-comment">Cannot quantify, but confirmed by social feedback.</div>
+  </div>
+
+  <!-- Bonus / Easter Egg -->
+  <div class="bonus-card" onclick="this.querySelector('p').style.display='block'">
+    🎁 Hidden Personality Insights
+    <p>Softie from inside, loves Indian food, enjoys holiday vibes, secretly playful.</p>
+  </div>
+
+  <!-- LLM Panel -->
+  <div id="llm-panel">
+    <h3>🎯 Birthday LLM Insight</h3>
+    <p>Based on 365 days of interactions: attention to detail drives success, ambition + empathy is rare, hidden preferences detected.</p>
+    <button onclick="showLLMExtra()">Ask Birthday LLM a Question</button>
+    <p id="llm-extra"></p>
   </div>
 
 </div>
 
 <script>
-  // PREVIEW MODE — remove before Dec 25
+  // PREVIEW MODE
   const today = new Date(2025, 11, 25); // Dec 25
-
-  const isBirthday =
-    today.getDate() === 25 &&
-    today.getMonth() === 11;
-
   const mainMessage = document.getElementById("main-message");
-  const lock = document.getElementById("lock");
-  const details = document.getElementById("details");
+  const subMessage = document.getElementById("sub-message");
+  const dashboard = document.getElementById("dashboard");
 
-const secondaryMessage = document.getElementById("secondary-message");
-const subMessage = document.getElementById("sub-message");
-
-if (isBirthday) {
-  mainMessage.innerText = "Yes.";
-  secondaryMessage.innerText = "🎂 Happy Birthday";
-  subMessage.innerText =
-    "The system ran quietly all year. Today, it’s ready to share what it noticed.";
-  lock.style.display = "block";
-  launchRibbons();
-
-} else {
-  mainMessage.innerText = "Nope.";
-}
-
-  function unlock() {
-    const input = document.getElementById("password").value.toLowerCase();
-
-    if (input === "december2022") {
-      lock.innerHTML = "<p>System unlocked.</p>";
-      details.style.display = "block";
-    } else {
-      alert("Not quite. Try again 🙂");
+  function launchRibbons() {
+    const colors = ["#F6C1CC","#C3DDFD","#D5F5E3","#FDEBD0","#E8DAEF"];
+    const ribbonCount = 60;
+    for (let i = 0; i < ribbonCount; i++) {
+      const ribbon = document.createElement("div");
+      ribbon.className = "ribbon";
+      ribbon.style.backgroundColor = colors[Math.floor(Math.random()*colors.length)];
+      ribbon.style.left = Math.random()*100 + "vw";
+      ribbon.style.animationDuration = 2 + Math.random()*2 + "s";
+      ribbon.style.animationDelay = Math.random()*0.5 + "s";
+      document.body.appendChild(ribbon);
+      setTimeout(()=>{ ribbon.remove(); }, 4000);
     }
   }
 
-function launchRibbons() {
-  const colors = ["#F6C1CC","#C3DDFD","#D5F5E3","#FDEBD0","#E8DAEF"];
-  const ribbonCount = 60;
-
-  for (let i = 0; i < ribbonCount; i++) {
-    const ribbon = document.createElement("div");
-    ribbon.className = "ribbon";
-    ribbon.style.top = "-20px";                     // start above
-ribbon.style.left = Math.random() * 100 + "vw"; // anywhere across width
-    ribbon.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-    ribbon.style.left = Math.random() * 100 + "vw";
-    ribbon.style.animationDuration = 2 + Math.random() * 2 + "s";
-    ribbon.style.animationDelay = Math.random() * 0.5 + "s";
-
-    document.body.appendChild(ribbon);
-
-    setTimeout(() => {
-      ribbon.remove();
-    }, 4000);
+  function showLLMExtra() {
+    const responses = [
+      "Your kindness multiplies team success.",
+      "Ambition plus consideration = unstoppable.",
+      "Your curiosity is contagious.",
+      "Even small gestures leave big impacts."
+    ];
+    const random = responses[Math.floor(Math.random()*responses.length)];
+    document.getElementById("llm-extra").innerText = random;
   }
-}
 
+  const isBirthday = today.getDate()===25 && today.getMonth()===11;
+  if(isBirthday){
+    mainMessage.innerText = "Yes!";
+    subMessage.innerText = "The system ran quietly all year. Today, it’s ready to reveal what makes you… you.";
+    launchRibbons();
+    dashboard.style.display = "block";
+
+    // Animate behavior cards sequentially
+    const cards = document.querySelectorAll(".behavior-card");
+    cards.forEach((card, index) => {
+      setTimeout(()=>{
+        card.classList.add("show");
+        const bar = card.querySelector(".behavior-bar");
+        // Animate bar width
+        const percent = parseInt(card.querySelector(".behavior-title").innerText.match(/\d+/)[0]);
+        bar.style.width = percent + "%";
+      }, index*500);
+    });
+  } else {
+    mainMessage.innerText = "Nope.";
+  }
 </script>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
