@@ -4,79 +4,83 @@
   <title>Birthday Live</title>
   <style>
     body {
-      font-family: system-ui, sans-serif;
-      padding: 40px;
-      max-width: 600px;
-      margin: auto;
-      line-height: 1.6;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      text-align: center;
+      padding: 60px 20px;
     }
-    .status {
-      font-size: 24px;
-      font-weight: bold;
-      margin-bottom: 20px;
-      white-space: pre-line;
+    #main-message {
+      font-size: 36px;
+      font-weight: 600;
+      margin-bottom: 40px;
     }
     .section {
+      text-align: left;
       margin-top: 30px;
+      max-width: 520px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    em {
+      color: #555;
     }
   </style>
 </head>
+
 <body>
+
+<div id="main-message"></div>
+
+<div id="details" style="display:none;">
+
+  <div class="section">
+    <strong>Observed User Behaviors</strong><br/>
+    <em>(Automatically inferred. Not editable.)</em>
+
+    <p>• Overthinks decisions before committing<br/>
+    → Result: High-quality outcomes</p>
+
+    <p>• Extremely practical<br/>
+    → Optimizes for feasibility over hype</p>
+
+    <p>• Detail-oriented<br/>
+    → Notices what most systems ignore</p>
+
+    <p>• Ambitious<br/>
+    → Sets bars slightly higher than required</p>
+
+    <p>• Highly considerate<br/>
+    → Accounts for impact on others</p>
+
+    <p>• Extra lovable<br/>
+    → System unable to quantify this metric</p>
+  </div>
+
+  <div class="section">
+    <em>
+      AI Decision Engine:<br/>
+      After analyzing 365 days of data,<br/>
+      today was selected as the optimal launch date.
+    </em>
+  </div>
+
+</div>
 
 <script>
   const today = new Date();
-  const isLive =
+  const isBirthday =
     today.getDate() === 25 &&
     today.getMonth() === 11;
-</script>
 
-<div class="status" id="status"></div>
+  const mainMessage = document.getElementById("main-message");
+  const details = document.getElementById("details");
 
-<div class="section">
-  <strong>Product:</strong> Birthday Live<br/>
-  <strong>Release Strategy:</strong> Annual<br/>
-  <strong>Audience Size:</strong> 1<br/>
-  <strong>Launch Confidence:</strong> High
-</div>
-
-<div class="section">
-  <strong>Observed User Behaviors</strong><br/>
-  <em>(Automatically inferred. Not editable.)</em>
-
-  <p>• Overthinks decisions before committing<br/>
-  &nbsp;&nbsp;→ Result: High-quality outcomes</p>
-
-  <p>• Extremely practical<br/>
-  &nbsp;&nbsp;→ Optimizes for feasibility over hype</p>
-
-  <p>• Detail-oriented<br/>
-  &nbsp;&nbsp;→ Notices what most systems ignore</p>
-
-  <p>• Ambitious<br/>
-  &nbsp;&nbsp;→ Sets bars slightly higher than required</p>
-
-  <p>• Highly considerate<br/>
-  &nbsp;&nbsp;→ Accounts for impact on others</p>
-
-  <p>• Extra lovable<br/>
-  &nbsp;&nbsp;→ System unable to quantify this metric</p>
-</div>
-
-<div class="section">
-  <em>
-    AI Decision Engine:<br/>
-    After analyzing 365 days of data,<br/>
-    today was selected as the optimal launch date.
-  </em>
-</div>
-
-<script>
-  document.getElementById("status").innerText =
-    isLive
-      ? "🎉 FEATURE LIVE 🎉\n\nBirthday Live is now streaming.\nUptime guarantee: 24 hours."
-      : "Feature Status: OFF\n\nReason:\nDate-based rollout conditions not met.";
+  if (isBirthday) {
+    mainMessage.innerText = "🎂 Happy Birthday";
+    details.style.display = "block";
+  } else {
+    mainMessage.innerText = "Nope.";
+  }
 </script>
 
 </body>
 </html>
-
