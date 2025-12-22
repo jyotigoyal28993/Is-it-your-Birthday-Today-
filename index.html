@@ -88,35 +88,16 @@ button:hover { background:#1d4ed8; }
 .dashboard-header {
   display:flex;
   justify-content:space-between;
-  align-items:flex-start;
+  align-items:center;
   margin-bottom:30px;
 }
 
-.header-left h1 {
+.dashboard-header h1 {
   font-size:32px;
   font-weight:700;
 }
 
-.system {
-  margin-top:6px;
-  font-size:14px;
-  opacity:0.7;
-}
-
-.bug {
-  margin-top:6px;
-  display:inline-block;
-  background:rgba(251,191,36,0.15);
-  color:#fbbf24;
-  padding:6px 10px;
-  border-radius:999px;
-  font-size:13px;
-}
-
-.date {
-  font-size:16px;
-  opacity:0.7;
-}
+.date { font-size:16px; opacity:0.7; }
 
 .cards {
   display:flex;
@@ -136,10 +117,11 @@ button:hover { background:#1d4ed8; }
   animation: cardIn 0.6s ease forwards;
 }
 
-.card:nth-child(1){ animation-delay:0.2s; }
-.card:nth-child(2){ animation-delay:0.4s; }
-.card:nth-child(3){ animation-delay:0.6s; }
-.card:nth-child(4){ animation-delay:0.8s; }
+.card:nth-child(1){ animation-delay:0.15s; }
+.card:nth-child(2){ animation-delay:0.3s; }
+.card:nth-child(3){ animation-delay:0.45s; }
+.card:nth-child(4){ animation-delay:0.6s; }
+.card:nth-child(5){ animation-delay:0.75s; }
 
 @keyframes cardIn {
   to { opacity:1; transform:translateY(0); }
@@ -152,8 +134,9 @@ button:hover { background:#1d4ed8; }
 
 .card p {
   font-size:14px;
-  opacity:0.75;
+  opacity:0.8;
   margin-bottom:12px;
+  line-height:1.4;
 }
 
 .progress-bar {
@@ -173,6 +156,21 @@ button:hover { background:#1d4ed8; }
 @keyframes fillBar {
   to { width: var(--w); }
 }
+
+/* footer bug */
+.dashboard-footer {
+  margin-top:32px;
+  font-size:14px;
+  opacity:0.8;
+}
+
+.bug {
+  display:inline-block;
+  background:rgba(251,191,36,0.15);
+  color:#fbbf24;
+  padding:6px 12px;
+  border-radius:999px;
+}
 </style>
 </head>
 
@@ -187,7 +185,7 @@ button:hover { background:#1d4ed8; }
 
   <div class="unlock" id="unlockPanel">
     <input type="password" id="password" placeholder="Enter password" />
-    <div class="hint">Hint: Month and year you landed in the US, ex:december2050</div>
+    <div class="hint">Hint: december2050</div>
     <div class="error" id="error"></div>
   </div>
 </div>
@@ -228,46 +226,44 @@ password.addEventListener("keydown",e=>{
     if(password.value.toLowerCase()==="december2022"){
       document.querySelector(".container").innerHTML=`
         <div class="dashboard-header">
-          <div class="header-left">
-            <h1>🎉 Birthday Dashboard</h1>
-            <div class="system">System initializing…</div>
-            <div class="bug">⚠ Bug #042: Lovable · Status: Open · Won’t Fix</div>
-          </div>
+          <h1>🎉 Birthday Dashboard</h1>
           <div class="date">Dec 25 🎂</div>
         </div>
 
         <div class="cards">
           <div class="card">
             <h2>Overthinking</h2>
-            <p>Cognitive loops reduced vs last year</p>
-            <div class="progress-bar">
-              <div class="progress-fill" style="--w:65%; background:#22c55e;"></div>
-            </div>
+            <p>Brain opens 37 tabs, closes none. Improved slightly this year though.</p>
+            <div class="progress-bar"><div class="progress-fill" style="--w:65%; background:#22c55e;"></div></div>
           </div>
 
           <div class="card">
             <h2>Ambitious</h2>
-            <p>Long-horizon goal intensity</p>
-            <div class="progress-bar">
-              <div class="progress-fill" style="--w:88%; background:#2563eb;"></div>
-            </div>
+            <p>Sees the mountain, plans the climb, already thinking of the next one.</p>
+            <div class="progress-bar"><div class="progress-fill" style="--w:88%; background:#2563eb;"></div></div>
           </div>
 
           <div class="card">
             <h2>Considerate</h2>
-            <p>Stakeholder impact awareness</p>
-            <div class="progress-bar">
-              <div class="progress-fill" style="--w:82%; background:#a78bfa;"></div>
-            </div>
+            <p>Quietly notices what others need before they even ask.</p>
+            <div class="progress-bar"><div class="progress-fill" style="--w:82%; background:#a78bfa;"></div></div>
           </div>
 
           <div class="card">
             <h2>Detail-oriented</h2>
-            <p>Execution accuracy bias</p>
-            <div class="progress-bar">
-              <div class="progress-fill" style="--w:90%; background:#fbbf24;"></div>
-            </div>
+            <p>Spots the typo everyone else missed. Twice.</p>
+            <div class="progress-bar"><div class="progress-fill" style="--w:90%; background:#fbbf24;"></div></div>
           </div>
+
+          <div class="card">
+            <h2>Playful</h2>
+            <p>Serious about work, dangerously unserious at the right moments.</p>
+            <div class="progress-bar"><div class="progress-fill" style="--w:75%; background:#38bdf8;"></div></div>
+          </div>
+        </div>
+
+        <div class="dashboard-footer">
+          <span class="bug">🐞 Bug #042: Lovable · Detected across all modules · Won’t Fix</span>
         </div>
       `;
     } else {
