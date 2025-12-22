@@ -36,10 +36,13 @@ body {
   z-index: 1;
 }
 
-/* content */
+/* container */
 .container {
   text-align: center;
   z-index: 2;
+  width: 100%;
+  max-width: 420px;
+  padding: 20px;
 }
 
 .yes {
@@ -56,6 +59,55 @@ body {
   justify-content: center;
   gap: 8px;
   opacity: 0.9;
+}
+
+/* button */
+button {
+  margin-top: 28px;
+  background: #2563eb;
+  border: none;
+  color: white;
+  padding: 14px 20px;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #1d4ed8;
+}
+
+/* unlock panel */
+.unlock {
+  display: none;
+  margin-top: 30px;
+  background: #020617;
+  padding: 20px;
+  border-radius: 14px;
+  border: 1px solid #1e293b;
+}
+
+.unlock input {
+  width: 100%;
+  padding: 12px;
+  margin-top: 12px;
+  border-radius: 8px;
+  border: 1px solid #334155;
+  background: #020617;
+  color: #e5e7eb;
+  font-size: 15px;
+}
+
+.hint {
+  margin-top: 10px;
+  font-size: 13px;
+  opacity: 0.6;
+}
+
+.error {
+  margin-top: 10px;
+  color: #f87171;
+  font-size: 14px;
 }
 
 /* ribbons */
@@ -78,6 +130,20 @@ body {
 <div class="container">
   <div class="yes">Yes.</div>
   <div class="sub">🎂 Happy Birthday</div>
+
+  <button id="unlockBtn">Unlock Birthday Insights</button>
+
+  <div class="unlock" id="unlockPanel">
+    <input
+      type="password"
+      id="password"
+      placeholder="Enter password"
+    />
+    <div class="hint">
+      Hint: Month + year you landed in the US (no spaces)
+    </div>
+    <div class="error" id="error"></div>
+  </div>
 </div>
 
 <script>
@@ -95,6 +161,7 @@ const subText = document.querySelector(".sub");
 if (!isBirthday) {
   yesText.innerText = "No.";
   subText.innerText = "";
+  document.getElementById("unlockBtn").style.display = "none";
 }
 
 /* ---- CELEBRATION ---- */
@@ -143,7 +210,6 @@ function celebrate() {
   const start = Date.now();
   const duration = 700;
 
-  // hero ribbon
   setTimeout(() => throwRibbon(true), 120);
 
   const interval = setInterval(() => {
@@ -158,10 +224,32 @@ function celebrate() {
   }, 90);
 }
 
-/* fire only on birthday */
 if (isBirthday) {
   celebrate();
 }
+
+/* ---- UNLOCK LOGIC ---- */
+const unlockBtn = document.getElementById("unlockBtn");
+const panel = document.getElementById("unlockPanel");
+const passwordInput = document.getElementById("password");
+const error = document.getElementById("error");
+
+unlockBtn.onclick = () => {
+  panel.style.display = "block";
+  unlockBtn.style.display = "none";
+};
+
+passwordInput.addEventListener("keydown", e => {
+  if (e.key === "Enter") {
+    if (passwordInput.value.toLowerCase() === "december2050") {
+      error.style.color = "#22c55e";
+      error.innerText = "Unlocked. Insights loading…";
+      // next step: dashboard
+    } else {
+      error.innerText = "Incorrect password.";
+    }
+  }
+});
 </script>
 
 </body>
