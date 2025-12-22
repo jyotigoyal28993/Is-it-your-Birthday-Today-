@@ -71,62 +71,54 @@ body {
 </div>
 
 <script>
-/* --- PREVIEW MODE --- */
-// const today = new Date();
-const today = new Date(2025, 11, 25); // Dec 25
-
-const isBirthday =
-  today.getDate() === 25 &&
-  today.getMonth() === 11;
-
-if (!isBirthday) {
-  document.querySelector(".yes").innerText = "No.";
-  document.querySelector(".sub").innerText = "";
-}
-
-/* --- LINKEDIN-STYLE RIBBON BURST --- */
-const colors = ["#2563eb", "#22c55e", "#f59e0b", "#8b5cf6"];
+const colors = ["#38bdf8", "#22c55e", "#fbbf24", "#a78bfa"];
 
 function launchBurst() {
-  for (let i = 0; i < 30; i++) {
+  for (let i = 0; i < 36; i++) {
     const ribbon = document.createElement("div");
     ribbon.className = "confetti";
+
+    // Start ONLY from top edge
     ribbon.style.left = Math.random() * 100 + "vw";
     ribbon.style.background =
       colors[Math.floor(Math.random() * colors.length)];
 
     document.body.appendChild(ribbon);
 
-    const fallDistance = window.innerHeight + 100;
-    const drift = (Math.random() - 0.5) * 200;
-    const duration = 2500 + Math.random() * 1000;
+    const fall = window.innerHeight + 150;
+    const drift = (Math.random() - 0.5) * 400;
+    const rotation = (Math.random() - 0.5) * 720;
 
     ribbon.animate(
       [
-        { transform: "translateY(0) translateX(0)", opacity: 1 },
         {
-          transform: `translateY(${fallDistance}px) translateX(${drift}px)`,
-          opacity: 0.9
+          transform: "translateY(-20px) translateX(0) rotate(0deg)",
+          opacity: 1
+        },
+        {
+          transform: `translateY(${fall}px) translateX(${drift}px) rotate(${rotation}deg)`,
+          opacity: 0.95
         }
       ],
       {
-        duration: duration,
-        easing: "cubic-bezier(0.22, 1, 0.36, 1)", // fast, celebratory
+        duration: 1800 + Math.random() * 600,
+        easing: "cubic-bezier(0.16, 1, 0.3, 1)", // FAST → slow
         fill: "forwards"
       }
     );
 
-    setTimeout(() => ribbon.remove(), duration);
+    setTimeout(() => ribbon.remove(), 2600);
   }
 }
 
-/* Fire 2–3 bursts like LinkedIn */
+/* Short celebratory sequence */
 launchBurst();
-setTimeout(launchBurst, 400);
-setTimeout(launchBurst, 800);
+setTimeout(launchBurst, 300);
+setTimeout(launchBurst, 600);
 </script>
 
 </body>
 </html>
+
 
 
