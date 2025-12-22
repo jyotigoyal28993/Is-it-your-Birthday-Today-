@@ -53,7 +53,7 @@ button {
 }
 button:hover { background:#1d4ed8; }
 
-/* unlock panel (keep layout intact) */
+/* unlock panel (kept exactly as before) */
 .unlock {
   display:none;
   margin-top:30px;
@@ -98,7 +98,7 @@ button:hover { background:#1d4ed8; }
   opacity:0.95;
 }
 
-/* --- DASHBOARD STYLES --- */
+/* --- DASHBOARD STYLES ONLY --- */
 .dashboard-header {
   display:flex;
   justify-content:space-between;
@@ -150,18 +150,19 @@ button:hover { background:#1d4ed8; }
 <div class="vignette" id="vignette"></div>
 
 <div class="container">
+  <!-- Landing page -->
   <div class="yes">Yes.</div>
   <div class="sub">🎂 Happy Birthday</div>
 
   <button id="unlockBtn">Unlock Birthday Insights</button>
 
-  <!-- unlock panel (layout intact) -->
+  <!-- Unlock panel (unchanged) -->
   <div class="unlock" id="unlockPanel">
     <div style="position:relative;">
       <input type="password" id="password" placeholder="Enter password" />
       <span id="togglePassword">👁️</span>
     </div>
-    <div class="hint">Hint: month and year you landed in the US (ex: december2050)</div>
+    <div class="hint">Hint: december2050</div>
     <div class="error" id="error"></div>
   </div>
 </div>
@@ -232,7 +233,7 @@ document.getElementById("togglePassword").addEventListener("click",()=>{
 passwordInput.addEventListener("keydown", e=>{
   if(e.key==="Enter"){
     if(passwordInput.value.toLowerCase()==="december2022"){
-      // Replace container with modern dashboard
+      // Modern Dashboard (flex/grid) AFTER unlock
       document.querySelector(".container").innerHTML=`
         <div class="dashboard-header">
           <h1>🎉 Birthday Dashboard</h1>
@@ -273,4 +274,3 @@ passwordInput.addEventListener("keydown", e=>{
 
 </body>
 </html>
-
