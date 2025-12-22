@@ -53,7 +53,7 @@ button {
 }
 button:hover { background:#1d4ed8; }
 
-/* unlock panel (kept exactly as before) */
+/* unlock panel (restored to original size, no eye icon) */
 .unlock {
   display:none;
   margin-top:30px;
@@ -61,31 +61,21 @@ button:hover { background:#1d4ed8; }
   padding:20px;
   border-radius:14px;
   border:1px solid #1e293b;
-  position: relative;
+  width:280px; /* fixed size like before */
+  margin-left:auto;
+  margin-right:auto;
 }
 .unlock input {
-  width: 100%;
-  padding: 12px;
-  margin-top: 12px;
-  border-radius: 8px;
-  border: 1px solid #334155;
-  background: #ffffff;
-  color: #020617;
-  font-size: 15px;
+  width:100%;
+  padding:12px;
+  border-radius:8px;
+  border:1px solid #334155;
+  background:#ffffff;
+  color:#020617;
+  font-size:15px;
 }
 .hint { margin-top:10px; font-size:13px; opacity:0.6; }
 .error { margin-top:10px; font-size:14px; }
-
-/* eye icon */
-#togglePassword {
-  position:absolute;
-  right:14px;
-  top:50%;
-  transform:translateY(-50%);
-  cursor:pointer;
-  font-size:18px;
-  color:#2563eb;
-}
 
 /* ribbons */
 .confetti {
@@ -156,14 +146,11 @@ button:hover { background:#1d4ed8; }
 
   <button id="unlockBtn">Unlock Birthday Insights</button>
 
-  <!-- Unlock panel (unchanged) -->
+  <!-- Unlock panel (original size, no eye icon) -->
   <div class="unlock" id="unlockPanel">
-    <div style="position:relative;">
       <input type="password" id="password" placeholder="Enter password" />
-      <span id="togglePassword">👁️</span>
-    </div>
-    <div class="hint">Hint: december2050</div>
-    <div class="error" id="error"></div>
+      <div class="hint">Hint: december2050</div>
+      <div class="error" id="error"></div>
   </div>
 </div>
 
@@ -225,10 +212,6 @@ const passwordInput=document.getElementById("password");
 const error=document.getElementById("error");
 
 unlockBtn.onclick=()=>{panel.style.display="block"; unlockBtn.style.display="none";};
-
-document.getElementById("togglePassword").addEventListener("click",()=>{
-  passwordInput.type = passwordInput.type==="password"?"text":"password";
-});
 
 passwordInput.addEventListener("keydown", e=>{
   if(e.key==="Enter"){
