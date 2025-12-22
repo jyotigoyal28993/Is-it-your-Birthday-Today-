@@ -148,9 +148,10 @@ button {
   <div class="landing-container">
     <div class="landing-yes">Yes.</div>
     <div class="landing-sub">🎂 Happy Birthday.</div>
-    <button class="landing-btn" id="unlockBtn">
-      Unlock birthday insights →
-    </button>
+<button class="landing-btn" onclick="showUnlock()">
+  Unlock birthday insights →
+</button>
+
   </div>
 </div>
 
@@ -159,7 +160,7 @@ button {
   <div class="unlock-card">
     <strong>Protected Insights</strong>
     <input id="password" placeholder="Enter password">
-    <button id="submitPassword" style="margin-top:16px">Unlock</button>
+ <button style="margin-top:16px" onclick="submitPassword()">Unlock</button>
     <p style="font-size:12px;color:#666;margin-top:10px">
       Hint: Month and year you landed in the US (no space)<br>
       example: december2050
@@ -180,6 +181,25 @@ button {
 </div>
 
 <script>
+const landing = document.getElementById("landing");
+const unlock = document.getElementById("unlock");
+const dashboard = document.getElementById("dashboard");
+
+function showUnlock() {
+  landing.style.display = "none";
+  unlock.style.display = "flex";
+}
+
+function submitPassword() {
+  const val = document.getElementById("password").value;
+  if (val === "december2050") {
+    unlock.style.display = "none";
+    dashboard.style.display = "block";
+  } else {
+    alert("Incorrect password");
+  }
+}
+
 /* CONFETTI COLORS */
 const colors = ["#2563eb", "#22c55e", "#f59e0b", "#ec4899", "#8b5cf6"];
 const layer = document.getElementById("confetti-layer");
@@ -215,3 +235,4 @@ document.getElementById("submitPassword").onclick = () => {
 
 </body>
 </html>
+
