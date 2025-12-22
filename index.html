@@ -219,33 +219,103 @@ passwordInput.addEventListener("keydown", e=>{
       // Modern Dashboard (flex/grid) AFTER unlock
       document.querySelector(".container").innerHTML=`
         <div class="dashboard-header">
-          <h1>🎉 Birthday Dashboard</h1>
-          <div class="date">Dec 25 🎂</div>
-        </div>
-        <div class="cards">
-          <div class="card">
-            <h2>Behavior Insights</h2>
-            <div>Overthinking: <span style="font-weight:700;">80%</span></div>
-            <div class="progress-bar"><div class="progress-fill" style="width:80%; background:#22c55e;"></div></div>
-            <div>Practical: <span style="font-weight:700;">90%</span></div>
-            <div class="progress-bar"><div class="progress-fill" style="width:90%; background:#2563eb;"></div></div>
-            <div>Ambitious: <span style="font-weight:700;">85%</span></div>
-            <div class="progress-bar"><div class="progress-fill" style="width:85%; background:#fbbf24;"></div></div>
-          </div>
+  <h1>🎉 Birthday Dashboard</h1>
+  <div class="date">Dec 25 🎂</div>
+</div>
 
-          <div class="card softie">
-            <h2>Bonus: Softie Inside 💖</h2>
-            <p>Even with a hard shell, he’s extremely caring and considerate.</p>
-            <p>Loves Indian food 🍛, misses India 🇮🇳, enjoys holiday vibes 🎄</p>
-            <p>Likes to write racing thoughts 📝 — brain faster than keyboard!</p>
-          </div>
+<div class="cards">
 
-          <div class="card">
-            <h2>LLM Insights 🤖</h2>
-            <p>After analyzing 365 days of data, today was chosen as optimal launch date.</p>
-            <p>System detects: high-quality outcomes correlate with careful reflection and attention to detail.</p>
-          </div>
-        </div>
+  <!-- Overthinking -->
+  <div class="card">
+    <h2>Overthinking</h2>
+
+    <div style="display:flex; justify-content:space-between;">
+      <span>Status</span>
+      <strong>↓ Improving</strong>
+    </div>
+
+    <div class="progress-bar">
+      <div class="progress-fill" style="width:62%; background:#22c55e;"></div>
+    </div>
+
+    <p style="font-size:13px; opacity:0.75;">
+      Decisions land faster this year without sacrificing outcome quality.
+    </p>
+  </div>
+
+  <!-- Ambition -->
+  <div class="card">
+    <h2>Ambition</h2>
+
+    <div style="display:flex; justify-content:space-between;">
+      <span>Index</span>
+      <strong>88%</strong>
+    </div>
+
+    <div class="progress-bar">
+      <div class="progress-fill" style="width:88%; background:#2563eb;"></div>
+    </div>
+
+    <p style="font-size:13px; opacity:0.75;">
+      Consistently sets bars slightly higher than required.
+    </p>
+  </div>
+
+  <!-- Consideration -->
+  <div class="card">
+    <h2>Consideration</h2>
+
+    <div style="display:flex; justify-content:space-between;">
+      <span>System Impact</span>
+      <strong>High</strong>
+    </div>
+
+    <div class="progress-bar">
+      <div class="progress-fill" style="width:90%; background:#a78bfa;"></div>
+    </div>
+
+    <p style="font-size:13px; opacity:0.75;">
+      Accounts for people and downstream impact before acting.
+    </p>
+  </div>
+
+  <!-- Detail Oriented -->
+  <div class="card">
+    <h2>Detail Sensitivity</h2>
+
+    <div style="display:flex; justify-content:space-between;">
+      <span>Detection Rate</span>
+      <strong>92%</strong>
+    </div>
+
+    <div class="progress-bar">
+      <div class="progress-fill" style="width:92%; background:#fbbf24;"></div>
+    </div>
+
+    <p style="font-size:13px; opacity:0.75;">
+      Notices second-order effects most systems overlook.
+    </p>
+  </div>
+
+  <!-- Lovable Bug -->
+  <div class="card">
+    <h2>🐞 Known Issue</h2>
+
+    <p style="font-size:14px;">
+      <strong>Unexpected trait detected:</strong> Lovable
+    </p>
+
+    <p style="font-size:13px; opacity:0.75;">
+      Emotional impact exceeds model capabilities.
+      This signal appears consistently and cannot be suppressed.
+    </p>
+
+    <p style="font-size:13px; opacity:0.6; margin-top:8px;">
+      Status: Open &nbsp;|&nbsp; Priority: P0 &nbsp;|&nbsp; Resolution: Won’t Fix
+    </p>
+  </div>
+
+</div>
       `;
     } else {
       error.style.color="#f87171";
@@ -257,3 +327,4 @@ passwordInput.addEventListener("keydown", e=>{
 
 </body>
 </html>
+
