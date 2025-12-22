@@ -1,278 +1,69 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8" />
-<title>Is It His Birthday?</title>
-
-<style>
-* { box-sizing: border-box; margin:0; padding:0; font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif; }
-
-body {
-  background-color: #0f172a;
-  color: #e5e7eb;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-
-/* vignette */
-.vignette {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background: radial-gradient(circle at center, rgba(0,0,0,0) 60%, rgba(0,0,0,0.35) 100%);
-  opacity: 0;
-  transition: opacity 0.8s ease;
-  z-index: 1;
-}
-
-.container {
-  text-align: center;
-  z-index: 2;
-  width: 100%;
-  max-width: 900px;
-  padding: 20px;
-}
-
-.yes { font-size: 96px; font-weight: 800; }
-.sub { margin-top:12px; font-size: 22px; display:flex; justify-content:center; gap:8px; opacity:0.9; }
-
-button {
-  margin-top:28px;
-  background:#2563eb;
-  border:none;
-  color:white;
-  padding:14px 20px;
-  border-radius:10px;
-  font-size:16px;
-  cursor:pointer;
-}
-button:hover { background:#1d4ed8; }
-
-.unlock {
-  display:none;
-  margin-top:30px;
-  background:#020617;
-  padding:20px;
-  border-radius:14px;
-  border:1px solid #1e293b;
-  width:280px;
-  margin-left:auto;
-  margin-right:auto;
-}
-.unlock input {
-  width:100%;
-  padding:12px;
-  border-radius:8px;
-  border:1px solid #334155;
-  background:#ffffff;
-  color:#020617;
-}
-.hint { margin-top:10px; font-size:13px; opacity:0.6; }
-.error { margin-top:10px; font-size:14px; }
-
-/* ribbons */
-.confetti {
-  position: fixed;
-  top: -40px;
-  width:6px;
-  height:18px;
-  pointer-events:none;
-  border-radius:2px;
-}
-
-/* ---------- DASHBOARD ---------- */
-
-.dashboard-header {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:30px;
-}
-
-.dashboard-header h1 {
-  font-size:32px;
-  font-weight:700;
-}
-
-.date { font-size:16px; opacity:0.7; }
-
-.cards {
-  display:flex;
-  gap:20px;
-  flex-wrap:wrap;
-  justify-content:center;
-}
-
-.card {
-  background:#111827;
-  border-radius:14px;
-  padding:22px;
-  width:260px;
-  box-shadow:0 10px 24px rgba(0,0,0,0.35);
-  opacity:0;
-  transform: translateY(14px);
-  animation: cardIn 0.6s ease forwards;
-}
-
-.card:nth-child(1){ animation-delay:0.15s; }
-.card:nth-child(2){ animation-delay:0.3s; }
-.card:nth-child(3){ animation-delay:0.45s; }
-.card:nth-child(4){ animation-delay:0.6s; }
-.card:nth-child(5){ animation-delay:0.75s; }
-
-@keyframes cardIn {
-  to { opacity:1; transform:translateY(0); }
-}
-
-.card h2 {
-  font-size:18px;
-  margin-bottom:6px;
-}
-
-.card p {
-  font-size:14px;
-  opacity:0.8;
-  margin-bottom:12px;
-  line-height:1.4;
-}
-
-.progress-bar {
-  height:10px;
-  background:#334155;
-  border-radius:6px;
-  overflow:hidden;
-}
-
-.progress-fill {
-  height:100%;
-  border-radius:6px;
-  width:0;
-  animation: fillBar 1s ease forwards;
-}
-
-@keyframes fillBar {
-  to { width: var(--w); }
-}
-
-/* footer bug */
-.dashboard-footer {
-  margin-top:32px;
-  font-size:14px;
-  opacity:0.8;
-}
-
-.bug {
-  display:inline-block;
-  background:rgba(251,191,36,0.15);
-  color:#fbbf24;
-  padding:6px 12px;
-  border-radius:999px;
-}
-</style>
-</head>
-
-<body>
-
-<div class="vignette" id="vignette"></div>
-
 <div class="container">
   <div class="yes">Yes.</div>
   <div class="sub">🎂 Happy Birthday</div>
+
   <button id="unlockBtn">Unlock Birthday Insights</button>
 
   <div class="unlock" id="unlockPanel">
-    <input type="password" id="password" placeholder="Enter password" />
-    <div class="hint">Hint: december2050</div>
-    <div class="error" id="error"></div>
+      <input type="password" id="password" placeholder="Enter password" />
+      <div class="hint">Hint: december2050</div>
+      <div class="error" id="error"></div>
   </div>
 </div>
 
 <script>
+// ---- DATE CHECK ----
 const today = new Date(2025,11,25);
 const isBirthday = today.getDate()===25 && today.getMonth()===11;
 
-if(isBirthday){
-  const colors=["#38bdf8","#22c55e","#fbbf24","#a78bfa"];
-  const vignette=document.getElementById("vignette");
-
-  function throwRibbon(){
-    const r=document.createElement("div");
-    r.className="confetti";
-    r.style.left=Math.random()*100+"vw";
-    r.style.background=colors[Math.floor(Math.random()*colors.length)];
-    document.body.appendChild(r);
-    r.animate([{transform:"translateY(-40px)"},{transform:`translateY(${innerHeight+200}px)`}],
-      {duration:2000,easing:"cubic-bezier(0.16,1,0.3,1)",fill:"forwards"});
-    setTimeout(()=>r.remove(),2300);
-  }
-
-  vignette.style.opacity="1";
-  for(let i=0;i<30;i++) setTimeout(throwRibbon,i*80);
-  setTimeout(()=>vignette.style.opacity="0",1200);
+if(!isBirthday){
+  document.querySelector(".yes").innerText="No.";
+  document.querySelector(".sub").innerText="";
+  document.getElementById("unlockBtn").style.display="none";
 }
 
-const unlockBtn=document.getElementById("unlockBtn");
-const panel=document.getElementById("unlockPanel");
-const password=document.getElementById("password");
-const error=document.getElementById("error");
+// ---- Celebration / Ribbons ----
+const colors = ["#38bdf8","#22c55e","#fbbf24","#a78bfa"];
+function throwRibbon(isHero=false){
+  const ribbon = document.createElement("div");
+  ribbon.className="confetti";
+  const size = isHero?12:6;
+  const height = isHero?34:18;
+  ribbon.style.width=size+"px";
+  ribbon.style.height=height+"px";
+  ribbon.style.left=Math.random()*100+"vw";
+  ribbon.style.background=colors[Math.floor(Math.random()*colors.length)];
+  document.body.appendChild(ribbon);
 
-unlockBtn.onclick=()=>{ panel.style.display="block"; unlockBtn.style.display="none"; };
+  const fall = window.innerHeight + 200;
+  const drift = (Math.random()-0.5)*500;
+  const rotation = (Math.random()-0.5)*1200;
 
-password.addEventListener("keydown",e=>{
-  if(e.key==="Enter"){
-    if(password.value.toLowerCase()==="december2022"){
-      document.querySelector(".container").innerHTML=`
-        <div class="dashboard-header">
-          <h1>🎉 Birthday Dashboard</h1>
-          <div class="date">Dec 25 🎂</div>
-        </div>
-
-        <div class="cards">
-          <div class="card">
-            <h2>Overthinking</h2>
-            <p>Brain opens 37 tabs, closes none. Improved slightly this year though.</p>
-            <div class="progress-bar"><div class="progress-fill" style="--w:65%; background:#22c55e;"></div></div>
-          </div>
-
-          <div class="card">
-            <h2>Ambitious</h2>
-            <p>Sees the mountain, plans the climb, already thinking of the next one.</p>
-            <div class="progress-bar"><div class="progress-fill" style="--w:88%; background:#2563eb;"></div></div>
-          </div>
-
-          <div class="card">
-            <h2>Considerate</h2>
-            <p>Quietly notices what others need before they even ask.</p>
-            <div class="progress-bar"><div class="progress-fill" style="--w:82%; background:#a78bfa;"></div></div>
-          </div>
-
-          <div class="card">
-            <h2>Detail-oriented</h2>
-            <p>Spots the typo everyone else missed. Twice.</p>
-            <div class="progress-bar"><div class="progress-fill" style="--w:90%; background:#fbbf24;"></div></div>
-          </div>
-
-          <div class="card">
-            <h2>Playful</h2>
-            <p>Serious about work, dangerously unserious at the right moments.</p>
-            <div class="progress-bar"><div class="progress-fill" style="--w:75%; background:#38bdf8;"></div></div>
-          </div>
-        </div>
-
-        <div class="dashboard-footer">
-          <span class="bug">🐞 Bug #042: Lovable · Detected across all modules · Won’t Fix</span>
-        </div>
-      `;
-    } else {
-      error.style.color="#f87171";
-      error.innerText="Incorrect password.";
+  ribbon.animate(
+    [
+      { transform: "translateY(-40px) translateX(0) rotate(0deg)" },
+      { transform: `translateY(${fall}px) translateX(${drift}px) rotate(${rotation}deg)` }
+    ],
+    {
+      duration: isHero?2600:1900+Math.random()*500,
+      easing:"cubic-bezier(0.16,1,0.3,1)",
+      fill:"forwards"
     }
-  }
-});
-</script>
+  );
 
-</body>
-</html>
+  setTimeout(()=>ribbon.remove(), isHero?2800:2400);
+}
+
+function celebrate(){
+  const start = Date.now();
+  setTimeout(()=>throwRibbon(true), 120);
+  const interval = setInterval(()=>{
+    for(let i=0;i<4;i++) throwRibbon(false);
+    if(Date.now()-start>700){
+      clearInterval(interval);
+    }
+  }, 90);
+}
+
+if(isBirthday) celebrate();
+</script>
