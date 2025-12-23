@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -92,12 +91,12 @@ button:hover { background:#1d4ed8; }
 
 @keyframes overthinkJump {
   0%   { width: 65%; }
-  15%  { width: 72%; } /* spike */
-  30%  { width: 60%; } /* drop */
-  45%  { width: 70%; } /* rethink */
+  15%  { width: 72%; }
+  30%  { width: 60%; }
+  45%  { width: 70%; }
   60%  { width: 63%; }
   75%  { width: 68%; }
-  100% { width: 65%; } /* back to baseline */
+  100% { width: 65%; }
 }
 
 .card.ambitious .progress-fill {
@@ -107,218 +106,57 @@ button:hover { background:#1d4ed8; }
 @keyframes ambitionStep {
   0%   { width: 88%; }
   20%  { width: 88%; }
-  40%  { width: 90%; } /* step up */
+  40%  { width: 90%; }
   55%  { width: 90%; }
-  75%  { width: 88%; } /* settles back */
+  75%  { width: 88%; }
   100% { width: 88%; }
 }
 
-  .flyComma {
+/* Flying full stop */
+.flyFullStop {
   display:inline-block;
   position:relative;
 }
-
-@keyframes flyCommaAnim {
+@keyframes flyFullStopAnim {
   0% { transform: translate(0,0) rotate(0deg); opacity:1; }
   50% { transform: translate(50px,-40px) rotate(180deg); opacity:1; }
   100% { transform: translate(0,-80px) rotate(360deg); opacity:0; }
 }
 
-  .dashboard-header {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:30px;
-}
-
-.dashboard-header h1 {
-  font-size:32px;
-  font-weight:700;
-}
-
+/* Dashboard styling continues */
+.dashboard-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:30px; }
+.dashboard-header h1 { font-size:32px; font-weight:700; }
 .date { font-size:16px; opacity:0.7; }
-
-.cards {
-  display:flex;
-  gap:20px;
-  flex-wrap:wrap;
-  justify-content:center;
-}
-
-.card {
-  background:#111827;
-  border-radius:14px;
-  padding:22px;
-  width:260px;
-  box-shadow:0 10px 24px rgba(0,0,0,0.35);
-  opacity:0;
-  transform: translateY(14px);
-  animation: cardIn 0.6s ease forwards;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-  position: relative;
-}
-
-.card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 14px 32px rgba(0,0,0,0.45);
-}
-
+.cards { display:flex; gap:20px; flex-wrap:wrap; justify-content:center; }
+.card { background:#111827; border-radius:14px; padding:22px; width:260px; box-shadow:0 10px 24px rgba(0,0,0,0.35); opacity:0; transform: translateY(14px); animation: cardIn 0.6s ease forwards; transition: transform 0.25s ease, box-shadow 0.25s ease; position: relative; }
+.card:hover { transform: translateY(-6px); box-shadow: 0 14px 32px rgba(0,0,0,0.45); }
 .card:nth-child(1){ animation-delay:0.15s; }
 .card:nth-child(2){ animation-delay:0.3s; }
 .card:nth-child(3){ animation-delay:0.45s; }
 .card:nth-child(4){ animation-delay:0.6s; }
 .card:nth-child(5){ animation-delay:0.75s; }
+@keyframes cardIn { to { opacity:1; transform:translateY(0); } }
+.card h2 { font-size:18px; margin-bottom:6px; }
+.card p { font-size:14px; opacity:0.8; margin-bottom:12px; line-height:1.4; }
+.progress-wrapper { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
+.progress-text { font-size: 12px; font-weight: 600; color: #c7d2fe; white-space: nowrap; }
+.progress-bar { flex: 1; height:10px; background:#334155; border-radius:6px; overflow:hidden; }
+.progress-fill { height:100%; border-radius:6px; width:0; animation: fillBar 1s ease forwards; }
+@keyframes fillBar { to { width: var(--w); } }
+.insight { font-size:13px; margin-top:10px; opacity:0; transform: translateY(4px); transition: opacity 0.25s ease, transform 0.25s ease; color:#c7d2fe; }
+.card:hover .insight { opacity:1; transform: translateY(0); }
 
-@keyframes cardIn {
-  to { opacity:1; transform:translateY(0); }
-}
+/* ---------- FOOTER BUG ---------- */
+.dashboard-footer { margin-top:32px; font-size:14px; opacity:0.8; text-align:center; }
+.bug { display:inline-block; background:rgba(251,191,36,0.15); color:#fbbf24; padding:6px 12px; border-radius:999px; cursor:pointer; position:relative; }
+.bug-tooltip { position:absolute; bottom:140%; left:50%; transform:translateX(-50%) translateY(6px); background:#020617; border:1px solid #334155; padding:12px 14px; border-radius:10px; font-size:13px; width:240px; opacity:0; pointer-events:none; box-shadow:0 12px 28px rgba(0,0,0,0.45); transition:opacity 0.25s ease, transform 0.25s ease; text-align:left; z-index:10; }
+.bug-tooltip.visible { opacity:1; transform:translateX(-50%) translateY(0); pointer-events:auto; }
 
-.card h2 {
-  font-size:18px;
-  margin-bottom:6px;
-}
-
-.card p {
-  font-size:14px;
-  opacity:0.8;
-  margin-bottom:12px;
-  line-height:1.4;
-}
-
-/* Progress bar wrapper for percentage text */
-.progress-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 8px;
-}
-
-.progress-text {
-  font-size: 12px;
-  font-weight: 600;
-  color: #c7d2fe;
-  white-space: nowrap;
-}
-
-.progress-bar {
-  flex: 1;
-}
-
-.progress-bar {
-  height:10px;
-  background:#334155;
-  border-radius:6px;
-  overflow:hidden;
-}
-
-.progress-fill {
-  height:100%;
-  border-radius:6px;
-  width:0;
-  animation: fillBar 1s ease forwards;
-}
-
-@keyframes fillBar {
-  to { width: var(--w); }
-}
-
-.insight {
-  font-size:13px;
-  margin-top:10px;
-  opacity:0;
-  transform: translateY(4px);
-  transition: opacity 0.25s ease, transform 0.25s ease;
-  color:#c7d2fe;
-}
-
-.card:hover .insight {
-  opacity:1;
-  transform: translateY(0);
-}
-
-/* ---------- FOOTER BUG (PHASE 2) ---------- */
-
-.dashboard-footer {
-  margin-top:32px;
-  font-size:14px;
-  opacity:0.8;
-  text-align:center;
-}
-
-.bug {
-  display:inline-block;
-  background:rgba(251,191,36,0.15);
-  color:#fbbf24;
-  padding:6px 12px;
-  border-radius:999px;
-  cursor:pointer;
-  position:relative;
-}
-
-.bug-tooltip {
-  position:absolute;
-  bottom:140%;
-  left:50%;
-  transform:translateX(-50%) translateY(6px);
-  background:#020617;
-  border:1px solid #334155;
-  padding:12px 14px;
-  border-radius:10px;
-  font-size:13px;
-  width:240px;
-  opacity:0;
-  pointer-events:none;
-  box-shadow:0 12px 28px rgba(0,0,0,0.45);
-  transition:opacity 0.25s ease, transform 0.25s ease;
-  text-align:left;
-  z-index:10;
-}
-
-.bug-tooltip.visible {
-  opacity:1;
-  transform:translateX(-50%) translateY(0);
-  pointer-events:auto;
-}
-
-/* ---------- PHASE 3: PERSONAL NOTE MODAL ---------- */
-.note-overlay {
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.75);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  opacity:0;
-  pointer-events:none;
-  transition:opacity 0.25s ease;
-  z-index:50;
-}
-
-.note-overlay.visible {
-  opacity:1;
-  pointer-events:auto;
-}
-
-.note-content {
-  background:#f8fafc;
-  border-radius:16px;
-  padding:20px;
-  max-width:500px;
-  max-height:80vh;
-  overflow:auto;
-  color:#020617;
-  box-shadow:0 16px 40px rgba(0,0,0,0.5);
-  position:relative;
-}
-
-.note-close {
-  position:absolute;
-  top:10px;
-  right:12px;
-  cursor:pointer;
-  font-size:18px;
-  color:#f87171;
-}
+/* ---------- PERSONAL NOTE MODAL ---------- */
+.note-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.75); display:flex; justify-content:center; align-items:center; opacity:0; pointer-events:none; transition:opacity 0.25s ease; z-index:50; }
+.note-overlay.visible { opacity:1; pointer-events:auto; }
+.note-content { background:#f8fafc; border-radius:16px; padding:20px; max-width:500px; max-height:80vh; overflow:auto; color:#020617; box-shadow:0 16px 40px rgba(0,0,0,0.5); position:relative; }
+.note-close { position:absolute; top:10px; right:12px; cursor:pointer; font-size:18px; color:#f87171; }
 </style>
 </head>
 
@@ -345,7 +183,6 @@ button:hover { background:#1d4ed8; }
     <h2>Personal Note 💌</h2>
     <embed src="PDF_1754.pdf" type="application/pdf" width="100%" height="400px" id="pdfEmbed">
 
-    <!-- Download button -->
     <div style="margin-top:15px;">
       <button id="downloadBtn" style="width:100%; padding:10px; border:none; border-radius:8px; background:#2563eb; color:white; cursor:pointer;">
         ⬇ Download
@@ -356,67 +193,49 @@ button:hover { background:#1d4ed8; }
 
 <script>
 const today = new Date(2025,11,25);
- // const today = new Date();
 const isBirthday = today.getDate()===25 && today.getMonth()===11;
-
-// ---- Celebration ----
-
 
 if(!isBirthday){
   document.body.innerHTML = `
     <div style="display:flex;align-items:center;justify-content:center;height:100vh;width:100vw;background:#0f172a;color:#e5e7eb;font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;flex-direction:column;">
       <div style="font-size:10vw;font-weight:800;animation:pulse 1.5s infinite;">NO</div>
       <div style="margin-top:20px;font-size:2vw;opacity:0.8;">Not today 🎂</div>
-      <style>
-        @keyframes pulse { 0%,100% {transform:scale(1);} 50% {transform:scale(1.05);} }
-      </style>
+      <style>@keyframes pulse { 0%,100% {transform:scale(1);} 50% {transform:scale(1.05);} }</style>
     </div>
   `;
 } 
+
 if(isBirthday){
   const colors=["#38bdf8","#22c55e","#fbbf24","#a78bfa","#f472b6","#f97316"];
   const vignette=document.getElementById("vignette");
 
   function throwRibbon(){
-    const count = 50; // number of ribbons per burst
+    const count = 50;
     for(let i=0;i<count;i++){
       const r=document.createElement("div");
-      r.className="confetti"; // keep your existing class
-      const width = Math.random()*6 + 4; // 4px-10px
-      const height = Math.random()*20 + 15; // 15px-35px
+      r.className="confetti";
+      const width = Math.random()*6 + 4;
+      const height = Math.random()*20 + 15;
       r.style.width = width+"px";
       r.style.height = height+"px";
       r.style.left = Math.random()*100+"vw";
       r.style.background = colors[Math.floor(Math.random()*colors.length)];
       r.style.opacity = Math.random()*0.9 + 0.3;
-
       document.body.appendChild(r);
-
       const rotate = Math.random()*360;
-      const xWobble = Math.random()*100 - 50; // side movement
-      const duration = Math.random()*800 + 1200; // 1.2s-2s fall
-
+      const xWobble = Math.random()*100 - 50;
+      const duration = Math.random()*800 + 1200;
       r.animate([
         { transform: `translate(${xWobble/2}px, -40px) rotate(${rotate}deg)` },
         { transform: `translate(${xWobble}px, ${innerHeight+100}px) rotate(${rotate+360}deg)` }
-      ], {
-        duration: duration,
-        easing: 'cubic-bezier(0.16,1,0.3,1)',
-        fill:'forwards'
-      });
-
+      ], { duration: duration, easing: 'cubic-bezier(0.16,1,0.3,1)', fill:'forwards' });
       setTimeout(()=>r.remove(), duration + 200);
     }
   }
 
   vignette.style.opacity="1";
-
-  // Burst every 80ms for 2.5 seconds
   const interval = setInterval(throwRibbon, 80);
-  setTimeout(()=>{
-    clearInterval(interval);
-    vignette.style.opacity="0";
-  },200);
+  setTimeout(()=>{ clearInterval(interval); vignette.style.opacity="0"; },200);
 }
 
 // ---- Unlock Logic ----
@@ -436,14 +255,10 @@ password.addEventListener("keydown",e=>{
         <div class="dashboard-header">
           <h1>🎉 Birthday Dashboard</h1>
           <div class="date">Dec 25 🎂</div>
-          <p style="opacity:0.7; margin-top:6px;">
-A year-in-review, interpreted by someone who notices details.
-</p>
-
+          <p style="opacity:0.7; margin-top:6px;">A year-in-review, interpreted by someone who notices details.</p>
         </div>
 
-
-       <div class="cards">
+        <div class="cards">
           <div class="card overthinking">
             <h2>Overthinking</h2>
             <p>Brain opens 37 tabs, closes none. Trending downward compared to last year.</p>
@@ -474,21 +289,19 @@ A year-in-review, interpreted by someone who notices details.
             <div class="insight">Remembers things people forget they mentioned</div>
           </div>
 
-<div class="card" id="detailCard">
-  <h2>Detail-oriented</h2>
-  <p id="detailText">
-    Spots the typo everyone else missed<span class="flyComma">.</span> Twice.
-  </p>
-  <div class="progress-wrapper">
-    <span class="progress-text" id="detailValue">90%</span>
-    <div class="progress-bar">
-      <div class="progress-fill" style="--w:90%; background:#fbbf24;"></div>
-    </div>
-  </div>
-  <div class="insight">Consistently identifies edge cases early.</div>
-</div>
-
-
+          <div class="card" id="detailCard">
+            <h2>Detail-oriented</h2>
+            <p id="detailText">
+              Spots the typo everyone else missed<span class="flyFullStop">.</span> Twice
+            </p>
+            <div class="progress-wrapper">
+              <span class="progress-text" id="detailValue">90%</span>
+              <div class="progress-bar">
+                <div class="progress-fill" style="--w:90%; background:#fbbf24;"></div>
+              </div>
+            </div>
+            <div class="insight">Consistently identifies edge cases early.</div>
+          </div>
 
           <div class="card">
             <h2>Playful</h2>
@@ -513,10 +326,7 @@ A year-in-review, interpreted by someone who notices details.
           </span>
           <br><br>
           <button id="openNote">📄 Personal Note</button>
-          <p style="margin-top:16px; font-size:13px; opacity:0.6;">
-Some things don’t need metrics.
-</p>
-
+          <p style="margin-top:16px; font-size:13px; opacity:0.6;">Some things don’t need metrics.</p>
         </div>
       `;
 
@@ -524,15 +334,8 @@ Some things don’t need metrics.
         // Phase 2: Lovable Bug
         const bug=document.getElementById("lovableBug");
         const tooltip=document.getElementById("bugTooltip");
-
-        bug.addEventListener("click",(e)=>{
-          e.stopPropagation();
-          tooltip.classList.toggle("visible");
-        });
-
-        document.addEventListener("click",()=>{
-          tooltip.classList.remove("visible");
-        });
+        bug.addEventListener("click",(e)=>{ e.stopPropagation(); tooltip.classList.toggle("visible"); });
+        document.addEventListener("click",()=>{ tooltip.classList.remove("visible"); });
 
         // Phase 3: Personal Note
         const openNoteBtn=document.getElementById("openNote");
@@ -544,25 +347,25 @@ Some things don’t need metrics.
         openNoteBtn.onclick = () => overlay.classList.add("visible");
         closeBtn.onclick = () => overlay.classList.remove("visible");
         overlay.onclick = (e) => { if(e.target===overlay) overlay.classList.remove("visible"); };
+        downloadBtn.onclick = () => { const link = document.createElement("a"); link.href = pdfEmbed.src; link.download = "personal-note.pdf"; link.click(); };
 
-        // Download button
-        downloadBtn.onclick = () => {
-          const link = document.createElement("a");
-          link.href = pdfEmbed.src;
-          link.download = "personal-note.pdf";
-          link.click();
-        };
-        // Select the flying comma element
-  const detailComma = document.querySelector("#detailText .flyComma");
-  setInterval(() => {
-    if(detailComma){
-      detailComma.style.animation = "flyCommaAnim 1s ease forwards";
-      setTimeout(() => {
-        detailComma.style.animation = ""; // reset for next loop
-      }, 1000);
-    }
-  }, 3000);
-}, 50);
+        // Replace flying full stop with visible comma
+        const detailText = document.getElementById("detailText");
+        const fullStop = document.querySelector("#detailText .flyFullStop");
+        if(fullStop){
+          const commaNode = document.createTextNode(",");
+          fullStop.parentNode.insertBefore(commaNode, fullStop);
+        }
+
+        // Animate the flying full stop
+        setInterval(() => {
+          if(fullStop){
+            fullStop.style.animation = "flyFullStopAnim 1s ease forwards";
+            setTimeout(()=>{ fullStop.style.animation=""; }, 1000);
+          }
+        }, 3000);
+
+      }, 50);
 
     } else {
       error.style.color="#f87171";
@@ -570,95 +373,6 @@ Some things don’t need metrics.
     }
   }
 });
-  
-  // all your existing JS ABOVE
-  // birthday logic
-  // unlock logic
-  // dashboard render
-  // tooltip logic
-  // personal note logic
-
-  // ⬇️ ADD THIS AT THE VERY END ⬇️
-  const overthinkValues = [65, 72, 60, 70, 63, 68];
-  let overthinkIndex = 0;
-
-  setInterval(() => {
-    const val = overthinkValues[overthinkIndex];
-    const textEl = document.getElementById("overthinkingValue");
-    const barEl = document.querySelector(".card.overthinking .progress-fill");
-
-    if (textEl && barEl) {
-      textEl.textContent = val + "%";
-      barEl.style.width = val + "%";
-    }
-
-    overthinkIndex = (overthinkIndex + 1) % overthinkValues.length;
-  }, 450);
-  const ambitiousValues = [88, 89, 90, 88, 90];
-let ambitiousIndex = 0;
-
-setInterval(() => {
-  const val = ambitiousValues[ambitiousIndex];
-  const textEl = document.getElementById("ambitiousValue");
-  const barEl = document.querySelector(".card.ambitious .progress-fill");
-
-  if (textEl && barEl) {
-    textEl.textContent = val + "%";
-    barEl.style.width = val + "%";
-  }
-
-  ambitiousIndex = (ambitiousIndex + 1) % ambitiousValues.length;
-}, 600);
-const detailValues = [90, 92, 88, 91, 90];
-let detailIndex = 0;
-
-setInterval(() => {
-  const val = detailValues[detailIndex];
-  const textEl = document.getElementById("detailText");
-  const barEl = document.querySelector(".card.detail-oriented .progress-fill");
-  
-  // Wiggle the bar slightly
-  barEl.style.width = val + "%";
-  barEl.style.transform = `translateX(${Math.random()*4 - 2}px)`; // tiny shake
-  
-  // Add a tiny “typo” flash in text
-  if(textEl){
-    textEl.textContent = "Spots the typo everyoen else missed. Twice.";
-    setTimeout(()=>textEl.textContent="Spots the typo everyone else missed. Twice.",200);
-  }
-  
-  document.getElementById("detailValue").textContent = val + "%";
-  detailIndex = (detailIndex + 1) % detailValues.length;
-}, 800);
-
-
-
 </script>
-
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
