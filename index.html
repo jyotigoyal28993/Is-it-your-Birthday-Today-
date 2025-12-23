@@ -613,19 +613,24 @@ setInterval(() => {
   throwEmoji();
   bounceCard();
 }, 3000);
-// Detail-oriented: subtle typo correction (TEXT ONLY)
+// Detail-oriented: instant typo catch
 const detailText = document.getElementById("detailText");
 
 if (detailText) {
-  setInterval(() => {
-    // introduce tiny typo
-    detailText.textContent = "Spots the typo everyoen else missed. Twice.";
+  const correct = "Spots the typo everyone else missed. Twice.";
+  const typo = "Spots the typo everyoen else missed. Twice.";
 
-    // quietly fix it
-    setTimeout(() => {
-      detailText.textContent = "Spots the typo everyone else missed. Twice.";
-    }, 700);
-  }, 1500);
+  setInterval(() => {
+    // introduce typo
+    detailText.textContent = typo;
+
+    // almost-instant correction
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        detailText.textContent = correct;
+      }, 180); // 👈 THIS is the key
+    });
+  }, 1100);
 }
 
 
@@ -687,6 +692,7 @@ barEl.style.background = colors[Math.floor(Math.random()*colors.length)];
 
 </body>
 </html>
+
 
 
 
