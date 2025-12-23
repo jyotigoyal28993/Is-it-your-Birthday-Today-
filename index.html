@@ -335,23 +335,49 @@ if(!isBirthday){
   `;
 } 
 if(isBirthday){
-  const colors=["#38bdf8","#22c55e","#fbbf24","#a78bfa"];
+  const colors=["#38bdf8","#22c55e","#fbbf24","#a78bfa","#f472b6","#f97316"];
   const vignette=document.getElementById("vignette");
 
   function throwRibbon(){
-    const r=document.createElement("div");
-    r.className="confetti";
-    r.style.left=Math.random()*100+"vw";
-    r.style.background=colors[Math.floor(Math.random()*colors.length)];
-    document.body.appendChild(r);
-    r.animate([{transform:"translateY(-40px)"},{transform:`translateY(${innerHeight+200}px)`}],
-      {duration:2000,easing:"cubic-bezier(0.16,1,0.3,1)",fill:"forwards"});
-    setTimeout(()=>r.remove(),2300);
+    const count = 100; // number of ribbons per burst
+    for(let i=0;i<count;i++){
+      const r=document.createElement("div");
+      r.className="confetti"; // keep your existing class
+      const width = Math.random()*6 + 4; // 4px-10px
+      const height = Math.random()*20 + 15; // 15px-35px
+      r.style.width = width+"px";
+      r.style.height = height+"px";
+      r.style.left = Math.random()*100+"vw";
+      r.style.background = colors[Math.floor(Math.random()*colors.length)];
+      r.style.opacity = Math.random()*0.9 + 0.3;
+
+      document.body.appendChild(r);
+
+      const rotate = Math.random()*360;
+      const xWobble = Math.random()*100 - 50; // side movement
+      const duration = Math.random()*800 + 1200; // 1.2s-2s fall
+
+      r.animate([
+        { transform: `translate(${xWobble/2}px, -40px) rotate(${rotate}deg)` },
+        { transform: `translate(${xWobble}px, ${innerHeight+100}px) rotate(${rotate+360}deg)` }
+      ], {
+        duration: duration,
+        easing: 'cubic-bezier(0.16,1,0.3,1)',
+        fill:'forwards'
+      });
+
+      setTimeout(()=>r.remove(), duration + 200);
+    }
   }
 
   vignette.style.opacity="1";
-  for(let i=0;i<30;i++) setTimeout(throwRibbon,i*80);
-  setTimeout(()=>vignette.style.opacity="0",1200);
+
+  // Burst every 80ms for 2.5 seconds
+  const interval = setInterval(throwRibbon, 80);
+  setTimeout(()=>{
+    clearInterval(interval);
+    vignette.style.opacity="0";
+  },2500);
 }
 
 // ---- Unlock Logic ----
@@ -492,6 +518,7 @@ Some things don’t need metrics.
 
 </body>
 </html>
+
 
 
 
