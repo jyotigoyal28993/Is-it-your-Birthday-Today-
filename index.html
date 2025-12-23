@@ -357,12 +357,16 @@ password.addEventListener("keydown",e=>{
         <div class="dashboard-header">
           <h1>🎉 Birthday Dashboard</h1>
           <div class="date">Dec 25 🎂</div>
+          <p style="opacity:0.7; margin-top:6px;">
+A year-in-review, interpreted by someone who notices details.
+</p>
+
         </div>
 
         <div class="cards">
           <div class="card">
             <h2>Overthinking</h2>
-            <p>Brain opens 37 tabs, closes none. Improved slightly this year though.</p>
+            <p>Brain opens 37 tabs, closes none. Trending downward compared to last year.</p>
             <div class="progress-wrapper">
               <span class="progress-text">65%</span>
               <div class="progress-bar"><div class="progress-fill" style="--w:65%; background:#22c55e;"></div></div>
@@ -397,7 +401,7 @@ password.addEventListener("keydown",e=>{
               <span class="progress-text">90%</span>
               <div class="progress-bar"><div class="progress-fill" style="--w:90%; background:#fbbf24;"></div></div>
             </div>
-            <div class="insight">Finds edge cases hiding in plain sight</div>
+            <div class="insight">Consistently identifies edge cases early.</div>
           </div>
 
           <div class="card">
@@ -415,7 +419,7 @@ password.addEventListener("keydown",e=>{
           <span class="bug" id="lovableBug">
             🐞 Bug #042: Lovable · Detected across all modules · Won’t Fix
             <div class="bug-tooltip" id="bugTooltip">
-              <strong>Debug log:</strong><br>
+              <strong>Internal system log (read-only)</strong><br>
               • Increases smiles unexpectedly<br>
               • Causes unnecessary kindness<br>
               • Engineer refuses to patch it
@@ -423,6 +427,10 @@ password.addEventListener("keydown",e=>{
           </span>
           <br><br>
           <button id="openNote">📄 Personal Note</button>
+          <p style="margin-top:16px; font-size:13px; opacity:0.6;">
+Some things don’t need metrics.
+</p>
+
         </div>
       `;
 
@@ -470,5 +478,6 @@ password.addEventListener("keydown",e=>{
 
 </body>
 </html>
+
 
 
