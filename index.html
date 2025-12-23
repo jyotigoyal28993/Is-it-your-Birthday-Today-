@@ -146,6 +146,20 @@ button:hover { background:#1d4ed8; }
   line-height:1.4;
 }
 
+/* Progress bar wrapper for percentage text */
+.progress-wrapper {
+  position: relative;
+  margin-top: 8px;
+}
+.progress-text {
+  position: absolute;
+  top: -20px;
+  right: 0;
+  font-size: 12px;
+  font-weight:600;
+  color:#c7d2fe;
+}
+
 .progress-bar {
   height:10px;
   background:#334155;
@@ -344,35 +358,50 @@ password.addEventListener("keydown",e=>{
           <div class="card">
             <h2>Overthinking</h2>
             <p>Brain opens 37 tabs, closes none. Improved slightly this year though.</p>
-            <div class="progress-bar"><div class="progress-fill" style="--w:65%; background:#22c55e;"></div></div>
+            <div class="progress-wrapper">
+              <span class="progress-text">65%</span>
+              <div class="progress-bar"><div class="progress-fill" style="--w:65%; background:#22c55e;"></div></div>
+            </div>
             <div class="insight">↓ Fewer late-night spiral loops than last year</div>
           </div>
 
           <div class="card">
             <h2>Ambitious</h2>
             <p>Sees the mountain, plans the climb, already thinking of the next one.</p>
-            <div class="progress-bar"><div class="progress-fill" style="--w:88%; background:#2563eb;"></div></div>
+            <div class="progress-wrapper">
+              <span class="progress-text">88%</span>
+              <div class="progress-bar"><div class="progress-fill" style="--w:88%; background:#2563eb;"></div></div>
+            </div>
             <div class="insight">↑ Sets goals slightly above what’s expected</div>
           </div>
 
           <div class="card">
             <h2>Considerate</h2>
             <p>Quietly notices what others need before they even ask.</p>
-            <div class="progress-bar"><div class="progress-fill" style="--w:82%; background:#a78bfa;"></div></div>
+            <div class="progress-wrapper">
+              <span class="progress-text">82%</span>
+              <div class="progress-bar"><div class="progress-fill" style="--w:82%; background:#a78bfa;"></div></div>
+            </div>
             <div class="insight">Remembers things people forget they mentioned</div>
           </div>
 
           <div class="card">
             <h2>Detail-oriented</h2>
             <p>Spots the typo everyone else missed. Twice.</p>
-            <div class="progress-bar"><div class="progress-fill" style="--w:90%; background:#fbbf24;"></div></div>
+            <div class="progress-wrapper">
+              <span class="progress-text">90%</span>
+              <div class="progress-bar"><div class="progress-fill" style="--w:90%; background:#fbbf24;"></div></div>
+            </div>
             <div class="insight">Finds edge cases hiding in plain sight</div>
           </div>
 
           <div class="card">
             <h2>Playful</h2>
             <p>Serious about work, dangerously unserious at the right moments.</p>
-            <div class="progress-bar"><div class="progress-fill" style="--w:75%; background:#38bdf8;"></div></div>
+            <div class="progress-wrapper">
+              <span class="progress-text">75%</span>
+              <div class="progress-bar"><div class="progress-fill" style="--w:75%; background:#38bdf8;"></div></div>
+            </div>
             <div class="insight">Keeps energy high without breaking the system</div>
           </div>
         </div>
