@@ -86,15 +86,20 @@ button:hover { background:#1d4ed8; }
 
 /* ---------- DASHBOARD ---------- */
 
-.card.overthinking:hover .progress-fill {
-  animation: overthinkPulse 0.9s ease;
+.card.overthinking .progress-fill {
+  animation: overthinkJump 2.8s ease-in-out infinite;
 }
 
-@keyframes overthinkPulse {
-  0% { width: 65%; }
-  50% { width: 68%; }
-  100% { width: 65%; }
+@keyframes overthinkJump {
+  0%   { width: 65%; }
+  15%  { width: 72%; } /* spike */
+  30%  { width: 60%; } /* drop */
+  45%  { width: 70%; } /* rethink */
+  60%  { width: 63%; }
+  75%  { width: 68%; }
+  100% { width: 65%; } /* back to baseline */
 }
+
 .card.ambitious .progress-fill {
   animation: ambitionStep 5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
@@ -102,7 +107,7 @@ button:hover { background:#1d4ed8; }
 @keyframes ambitionStep {
   0%   { width: 88%; }
   20%  { width: 88%; }
-  40%  { width: 92%; } /* step up */
+  40%  { width: 96%; } /* step up */
   55%  { width: 90%; }
   75%  { width: 88%; } /* settles back */
   100% { width: 88%; }
@@ -543,6 +548,7 @@ Some things don’t need metrics.
 
 </body>
 </html>
+
 
 
 
