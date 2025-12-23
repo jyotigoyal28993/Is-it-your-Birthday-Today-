@@ -489,6 +489,7 @@ A year-in-review, interpreted by someone who notices details.
 </div>
 
 
+
           <div class="card">
             <h2>Playful</h2>
             <p>Serious about work, dangerously unserious at the right moments.</p>
@@ -619,21 +620,25 @@ setInterval(() => {
   document.getElementById("detailValue").textContent = val + "%";
   detailIndex = (detailIndex + 1) % detailValues.length;
 }, 800);
-// Flying comma logic for Detail-oriented card
+// Select the flying comma element
 const detailComma = document.querySelector("#detailText .flyComma");
 
-// Animate every 3 seconds
+// Animate the comma every 3 seconds
 setInterval(() => {
-  detailComma.style.animation = "flyCommaAnim 1s ease forwards";
-  setTimeout(() => {
-    detailComma.style.animation = ""; // reset to allow next animation
-  }, 1000);
+  if(detailComma){
+    detailComma.style.animation = "flyCommaAnim 1s ease forwards";
+    setTimeout(() => {
+      detailComma.style.animation = ""; // reset for next loop
+    }, 1000);
+  }
 }, 3000);
+
 
 </script>
 
 </body>
 </html>
+
 
 
 
