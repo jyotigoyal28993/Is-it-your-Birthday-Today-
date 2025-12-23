@@ -95,6 +95,16 @@ button:hover { background:#1d4ed8; }
   50% { width: 68%; }
   100% { width: 65%; }
 }
+.card.ambitious .progress-fill {
+  animation: ambitionClimb 6s ease-in-out infinite;
+}
+
+@keyframes ambitionClimb {
+  0%   { width: 88%; }
+  40%  { width: 90%; }
+  60%  { width: 90%; }
+  100% { width: 88%; }
+}
 
   .dashboard-header {
   display:flex;
@@ -426,7 +436,7 @@ A year-in-review, interpreted by someone who notices details.
             <div class="insight">↓ Fewer late-night spiral loops than last year (or may be more):p</div>
           </div>
 
-          <div class="card">
+          <div class="card ambitious">
             <h2>Ambitious</h2>
             <p>Sees the mountain, plans the climb, already thinking of the next one.</p>
             <div class="progress-wrapper">
@@ -530,6 +540,7 @@ Some things don’t need metrics.
 
 </body>
 </html>
+
 
 
 
