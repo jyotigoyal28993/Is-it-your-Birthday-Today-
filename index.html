@@ -338,24 +338,28 @@ if(isBirthday){
   const colors=["#38bdf8","#22c55e","#fbbf24","#a78bfa","#f472b6","#f97316"];
   const vignette=document.getElementById("vignette");
 
+ if(isBirthday){
+  const colors=["#38bdf8","#22c55e","#fbbf24","#a78bfa","#f472b6","#f97316"];
+  const vignette=document.getElementById("vignette");
+
   function throwRibbon(){
-    const count = 100; // number of ribbons per burst
+    const count = 15; // fewer ribbons per burst
     for(let i=0;i<count;i++){
       const r=document.createElement("div");
-      r.className="confetti"; // keep your existing class
+      r.className="confetti"; // your ribbon class
       const width = Math.random()*6 + 4; // 4px-10px
-      const height = Math.random()*20 + 15; // 15px-35px
+      const height = Math.random()*20 + 25; // longer ribbons
       r.style.width = width+"px";
       r.style.height = height+"px";
       r.style.left = Math.random()*100+"vw";
       r.style.background = colors[Math.floor(Math.random()*colors.length)];
-      r.style.opacity = Math.random()*0.9 + 0.3;
+      r.style.opacity = Math.random()*0.8 + 0.5;
 
       document.body.appendChild(r);
 
       const rotate = Math.random()*360;
-      const xWobble = Math.random()*100 - 50; // side movement
-      const duration = Math.random()*800 + 1200; // 1.2s-2s fall
+      const xWobble = Math.random()*50 - 25; // slight horizontal movement
+      const duration = Math.random()*700 + 800; // fast fall 0.8-1.5s
 
       r.animate([
         { transform: `translate(${xWobble/2}px, -40px) rotate(${rotate}deg)` },
@@ -372,13 +376,14 @@ if(isBirthday){
 
   vignette.style.opacity="1";
 
-  // Burst every 80ms for 2.5 seconds
-  const interval = setInterval(throwRibbon, 80);
+  // Burst every 100ms for 2 seconds
+  const interval = setInterval(throwRibbon, 100);
   setTimeout(()=>{
     clearInterval(interval);
     vignette.style.opacity="0";
-  },2500);
+  },1000);
 }
+
 
 // ---- Unlock Logic ----
 const unlockBtn=document.getElementById("unlockBtn");
@@ -518,6 +523,7 @@ Some things don’t need metrics.
 
 </body>
 </html>
+
 
 
 
