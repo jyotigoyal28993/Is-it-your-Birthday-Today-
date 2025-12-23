@@ -668,31 +668,28 @@ barEl.style.background = colors[Math.floor(Math.random()*colors.length)];
   ambitiousIndex = (ambitiousIndex + 1) % ambitiousValues.length;
 }, 600);
 
+// Detail-oriented: subtle typo correction (text only)
+const detailText = document.getElementById("detailText");
 
-setInterval(() => {
-  const val = detailValues[detailIndex];
-  const textEl = document.getElementById("detailText");
-  const barEl = document.querySelector(".card.detail-oriented .progress-fill");
-  
-  // Wiggle the bar slightly
-  barEl.style.width = val + "%";
-  barEl.style.transform = `translateX(${Math.random()*4 - 2}px)`; // tiny shake
-  
-  // Add a tiny “typo” flash in text
-  if(textEl){
-    textEl.textContent = "Spots the typo everyoen else missed. Twice.";
-    setTimeout(()=>textEl.textContent="Spots the typo everyone else missed. Twice.",200);
-  }
-  
-  document.getElementById("detailValue").textContent = val + "%";
-  detailIndex = (detailIndex + 1) % detailValues.length;
-}, 800);
+if (detailText) {
+  setInterval(() => {
+    // Introduce a tiny typo
+    detailText.textContent = "Spots the typo everyoen else missed. Twice.";
+
+    // Quietly fix it
+    setTimeout(() => {
+      detailText.textContent = "Spots the typo everyone else missed. Twice.";
+    }, 300);
+  }, 4000);
+}
+
 
 
 </script>
 
 </body>
 </html>
+
 
 
 
