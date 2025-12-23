@@ -1,10 +1,8 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<title>Is It His Birthday?</title>
-
+<title>Birthday Dashboard Final</title>
 <style>
 * { box-sizing: border-box; margin:0; padding:0; font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif; }
 
@@ -18,7 +16,6 @@ body {
   overflow: hidden;
 }
 
-/* vignette */
 .vignette {
   position: fixed;
   inset: 0;
@@ -29,669 +26,90 @@ body {
   z-index: 1;
 }
 
-.container {
-  text-align: center;
-  z-index: 2;
-  width: 100%;
-  max-width: 900px;
-  padding: 20px;
-}
+.container { text-align:center; z-index:2; width:100%; max-width:900px; padding:20px; }
+.yes { font-size:96px; font-weight:800; }
+.sub { margin-top:12px; font-size:22px; display:flex; justify-content:center; gap:8px; opacity:0.9; }
 
-.yes { font-size: 96px; font-weight: 800; }
-.sub { margin-top:12px; font-size: 22px; display:flex; justify-content:center; gap:8px; opacity:0.9; }
-
-button {
-  margin-top:28px;
-  background:#2563eb;
-  border:none;
-  color:white;
-  padding:14px 20px;
-  border-radius:10px;
-  font-size:16px;
-  cursor:pointer;
-}
+button { margin-top:28px; background:#2563eb; border:none; color:white; padding:14px 20px; border-radius:10px; font-size:16px; cursor:pointer; }
 button:hover { background:#1d4ed8; }
 
-.unlock {
-  display:none;
-  margin-top:30px;
-  background:#020617;
-  padding:20px;
-  border-radius:14px;
-  border:1px solid #1e293b;
-  width:280px;
-  margin-left:auto;
-  margin-right:auto;
-}
-.unlock input {
-  width:100%;
-  padding:12px;
-  border-radius:8px;
-  border:1px solid #334155;
-  background:#ffffff;
-  color:#020617;
-}
+.unlock { display:none; margin-top:30px; background:#020617; padding:20px; border-radius:14px; border:1px solid #1e293b; width:280px; margin-left:auto; margin-right:auto; }
+.unlock input { width:100%; padding:12px; border-radius:8px; border:1px solid #334155; background:#ffffff; color:#020617; }
 .hint { margin-top:10px; font-size:13px; opacity:0.6; }
 .error { margin-top:10px; font-size:14px; }
 
-/* ribbons */
-.confetti {
-  position: fixed;
-  top: -40px;
-  width:6px;
-  height:18px;
-  pointer-events:none;
-  border-radius:2px;
-}
+.confetti { position: fixed; top:-40px; width:6px; height:18px; pointer-events:none; border-radius:2px; }
 
-/* ---------- DASHBOARD ---------- */
+.card.overthinking .progress-fill { animation: overthinkJump 2.8s ease-in-out infinite; }
+@keyframes overthinkJump { 0%{width:65%;} 15%{width:72%;} 30%{width:60%;} 45%{width:70%;} 60%{width:63%;} 75%{width:68%;} 100%{width:65%;} }
+.card.ambitious .progress-fill { animation: ambitionStep 5s cubic-bezier(0.4,0,0.2,1) infinite; }
+@keyframes ambitionStep { 0%{width:88%;} 20%{width:88%;} 40%{width:90%;} 55%{width:90%;} 75%{width:88%;} 100%{width:88%;} }
 
-.card.overthinking .progress-fill {
-  animation: overthinkJump 2.8s ease-in-out infinite;
-}
+.flyComma, .floatingEmoji { display:inline-block; position:relative; }
+@keyframes flyCommaAnim { 0%{transform:translate(0,0) rotate(0deg); opacity:1;} 50%{transform:translate(50px,-40px) rotate(180deg); opacity:1;} 100%{transform:translate(0,-80px) rotate(360deg); opacity:0;} }
+@keyframes floatEmoji { 0%{transform:translateY(0);} 50%{transform:translateY(-12px);} 100%{transform:translateY(0);} }
 
-@keyframes overthinkJump {
-  0%   { width: 65%; }
-  15%  { width: 72%; } /* spike */
-  30%  { width: 60%; } /* drop */
-  45%  { width: 70%; } /* rethink */
-  60%  { width: 63%; }
-  75%  { width: 68%; }
-  100% { width: 65%; } /* back to baseline */
-}
-
-.card.ambitious .progress-fill {
-  animation: ambitionStep 5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-}
-
-@keyframes ambitionStep {
-  0%   { width: 88%; }
-  20%  { width: 88%; }
-  40%  { width: 90%; } /* step up */
-  55%  { width: 90%; }
-  75%  { width: 88%; } /* settles back */
-  100% { width: 88%; }
-}
-
-
-  .dashboard-header {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:30px;
-}
-
-.dashboard-header h1 {
-  font-size:32px;
-  font-weight:700;
-}
-
-.date { font-size:16px; opacity:0.7; }
-
-.cards {
-  display:flex;
-  gap:20px;
-  flex-wrap:wrap;
-  justify-content:center;
-}
-
-.card {
-  background:#111827;
-  border-radius:14px;
-  padding:22px;
-  width:260px;
-  box-shadow:0 10px 24px rgba(0,0,0,0.35);
-  opacity:0;
-  transform: translateY(14px);
-  animation: cardIn 0.6s ease forwards;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-  position: relative;
-}
-
-.card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 14px 32px rgba(0,0,0,0.45);
-}
-
-.card:nth-child(1){ animation-delay:0.15s; }
-.card:nth-child(2){ animation-delay:0.3s; }
-.card:nth-child(3){ animation-delay:0.45s; }
-.card:nth-child(4){ animation-delay:0.6s; }
-.card:nth-child(5){ animation-delay:0.75s; }
-
-@keyframes cardIn {
-  to { opacity:1; transform:translateY(0); }
-}
-
-.card h2 {
-  font-size:18px;
-  margin-bottom:6px;
-}
-
-.card p {
-  font-size:14px;
-  opacity:0.8;
-  margin-bottom:12px;
-  line-height:1.4;
-}
-
-/* Progress bar wrapper for percentage text */
-.progress-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 8px;
-}
-
-.progress-text {
-  font-size: 12px;
-  font-weight: 600;
-  color: #c7d2fe;
-  white-space: nowrap;
-}
-
-.progress-bar {
-  flex: 1;
-}
-
-.progress-bar {
-  height:10px;
-  background:#334155;
-  border-radius:6px;
-  overflow:hidden;
-}
-
-.progress-fill {
-  height:100%;
-  border-radius:6px;
-  width:0;
-  animation: fillBar 1s ease forwards;
-}
-
-@keyframes fillBar {
-  to { width: var(--w); }
-}
-
-.insight {
-  font-size:13px;
-  margin-top:10px;
-  opacity:0;
-  transform: translateY(4px);
-  transition: opacity 0.25s ease, transform 0.25s ease;
-  color:#c7d2fe;
-}
-
-.card:hover .insight {
-  opacity:1;
-  transform: translateY(0);
-}
-
-/* ---------- FOOTER BUG (PHASE 2) ---------- */
-
-.dashboard-footer {
-  margin-top:32px;
-  font-size:14px;
-  opacity:0.8;
-  text-align:center;
-}
-
-.bug {
-  display:inline-block;
-  background:rgba(251,191,36,0.15);
-  color:#fbbf24;
-  padding:6px 12px;
-  border-radius:999px;
-  cursor:pointer;
-  position:relative;
-}
-
-.bug-tooltip {
-  position:absolute;
-  bottom:140%;
-  left:50%;
-  transform:translateX(-50%) translateY(6px);
-  background:#020617;
-  border:1px solid #334155;
-  padding:12px 14px;
-  border-radius:10px;
-  font-size:13px;
-  width:240px;
-  opacity:0;
-  pointer-events:none;
-  box-shadow:0 12px 28px rgba(0,0,0,0.45);
-  transition:opacity 0.25s ease, transform 0.25s ease;
-  text-align:left;
-  z-index:10;
-}
-
-.bug-tooltip.visible {
-  opacity:1;
-  transform:translateX(-50%) translateY(0);
-  pointer-events:auto;
-}
-
-/* ---------- PHASE 3: PERSONAL NOTE MODAL ---------- */
-.note-overlay {
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.75);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  opacity:0;
-  pointer-events:none;
-  transition:opacity 0.25s ease;
-  z-index:50;
-}
-
-.note-overlay.visible {
-  opacity:1;
-  pointer-events:auto;
-}
-
-.note-content {
-  background:#f8fafc;
-  border-radius:16px;
-  padding:20px;
-  max-width:500px;
-  max-height:80vh;
-  overflow:auto;
-  color:#020617;
-  box-shadow:0 16px 40px rgba(0,0,0,0.5);
-  position:relative;
-}
-
-.note-close {
-  position:absolute;
-  top:10px;
-  right:12px;
-  cursor:pointer;
-  font-size:18px;
-  color:#f87171;
-}
+.dashboard-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px;}
+.dashboard-header h1{font-size:32px;font-weight:700;}
+.date{font-size:16px;opacity:0.7;}
+.cards{display:flex;gap:20px;flex-wrap:wrap;justify-content:center;}
+.card{background:#111827;border-radius:14px;padding:22px;width:260px;box-shadow:0 10px 24px rgba(0,0,0,0.35);opacity:0;transform:translateY(14px);animation:cardIn 0.6s ease forwards;transition: transform 0.25s ease, box-shadow 0.25s ease;position:relative;}
+.card:hover{transform:translateY(-6px);box-shadow:0 14px 32px rgba(0,0,0,0.45);}
+.card:nth-child(1){animation-delay:0.15s;} .card:nth-child(2){animation-delay:0.3s;} .card:nth-child(3){animation-delay:0.45s;} .card:nth-child(4){animation-delay:0.6s;} .card:nth-child(5){animation-delay:0.75s;}
+@keyframes cardIn{to{opacity:1;transform:translateY(0);}}
+.card h2{font-size:18px;margin-bottom:6px;}
+.card p{font-size:14px;opacity:0.8;margin-bottom:12px;line-height:1.4;}
+.progress-wrapper{display:flex;align-items:center;gap:10px;margin-top:8px;}
+.progress-text{font-size:12px;font-weight:600;color:#c7d2fe;white-space:nowrap;}
+.progress-bar{flex:1;height:10px;background:#334155;border-radius:6px;overflow:hidden;}
+.progress-fill{height:100%;border-radius:6px;width:0;animation:fillBar 1s ease forwards;}
+@keyframes fillBar{to{width:var(--w);}}
+.insight{font-size:13px;margin-top:10px;opacity:0;transform:translateY(4px);transition:opacity 0.25s ease, transform 0.25s ease;color:#c7d2fe;}
+.card:hover .insight{opacity:1;transform:translateY(0);}
+.dashboard-footer{margin-top:32px;font-size:14px;opacity:0.8;text-align:center;}
+.bug{display:inline-block;background:rgba(251,191,36,0.15);color:#fbbf24;padding:6px 12px;border-radius:999px;cursor:pointer;position:relative;}
+.bug-tooltip{position:absolute;bottom:140%;left:50%;transform:translateX(-50%) translateY(6px);background:#020617;border:1px solid #334155;padding:12px 14px;border-radius:10px;font-size:13px;width:240px;opacity:0;pointer-events:none;box-shadow:0 12px 28px rgba(0,0,0,0.45);transition:opacity 0.25s ease, transform 0.25s ease;text-align:left;z-index:10;}
+.bug-tooltip.visible{opacity:1;transform:translateX(-50%) translateY(0);pointer-events:auto;}
+.note-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.75);display:flex;justify-content:center;align-items:center;opacity:0;pointer-events:none;transition:opacity 0.25s ease;z-index:50;}
+.note-overlay.visible{opacity:1;pointer-events:auto;}
+.note-content{background:#f8fafc;border-radius:16px;padding:20px;max-width:500px;max-height:80vh;overflow:auto;color:#020617;box-shadow:0 16px 40px rgba(0,0,0,0.5);position:relative;}
+.note-close{position:absolute;top:10px;right:12px;cursor:pointer;font-size:18px;color:#f87171;}
 </style>
 </head>
-
 <body>
-
 <div class="vignette" id="vignette"></div>
-
 <div class="container">
   <div class="yes">Yes.</div>
   <div class="sub">🎂 Happy Birthday</div>
   <button id="unlockBtn">Unlock Birthday Insights</button>
-
   <div class="unlock" id="unlockPanel">
     <input type="password" id="password" placeholder="Enter password" />
     <div class="hint">Hint: month and year you landed in the US (ex:december2050)</div>
     <div class="error" id="error"></div>
   </div>
 </div>
-
-<!-- Phase 3: Personal Note Modal -->
 <div class="note-overlay" id="noteOverlay">
   <div class="note-content">
     <span class="note-close">✖</span>
     <h2>Personal Note 💌</h2>
     <embed src="PDF_1754.pdf" type="application/pdf" width="100%" height="400px" id="pdfEmbed">
-
-    <!-- Download button -->
     <div style="margin-top:15px;">
-      <button id="downloadBtn" style="width:100%; padding:10px; border:none; border-radius:8px; background:#2563eb; color:white; cursor:pointer;">
-        ⬇ Download
-      </button>
+      <button id="downloadBtn" style="width:100%; padding:10px; border:none; border-radius:8px; background:#2563eb; color:white; cursor:pointer;">⬇ Download</button>
     </div>
   </div>
 </div>
-
 <script>
 const today = new Date(2025,11,25);
- // const today = new Date();
 const isBirthday = today.getDate()===25 && today.getMonth()===11;
-
-// ---- Celebration ----
-
-
-if(!isBirthday){
-  document.body.innerHTML = `
-    <div style="display:flex;align-items:center;justify-content:center;height:100vh;width:100vw;background:#0f172a;color:#e5e7eb;font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;flex-direction:column;">
-      <div style="font-size:10vw;font-weight:800;animation:pulse 1.5s infinite;">NO</div>
-      <div style="margin-top:20px;font-size:2vw;opacity:0.8;">Not today 🎂</div>
-      <style>
-        @keyframes pulse { 0%,100% {transform:scale(1);} 50% {transform:scale(1.05);} }
-      </style>
-    </div>
-  `;
-} 
-if(isBirthday){
-  const colors=["#38bdf8","#22c55e","#fbbf24","#a78bfa","#f472b6","#f97316"];
-  const vignette=document.getElementById("vignette");
-
-  function throwRibbon(){
-    const count = 50; // number of ribbons per burst
-    for(let i=0;i<count;i++){
-      const r=document.createElement("div");
-      r.className="confetti"; // keep your existing class
-      const width = Math.random()*6 + 4; // 4px-10px
-      const height = Math.random()*20 + 15; // 15px-35px
-      r.style.width = width+"px";
-      r.style.height = height+"px";
-      r.style.left = Math.random()*100+"vw";
-      r.style.background = colors[Math.floor(Math.random()*colors.length)];
-      r.style.opacity = Math.random()*0.9 + 0.3;
-
-      document.body.appendChild(r);
-
-      const rotate = Math.random()*360;
-      const xWobble = Math.random()*100 - 50; // side movement
-      const duration = Math.random()*800 + 1200; // 1.2s-2s fall
-
-      r.animate([
-        { transform: `translate(${xWobble/2}px, -40px) rotate(${rotate}deg)` },
-        { transform: `translate(${xWobble}px, ${innerHeight+100}px) rotate(${rotate+360}deg)` }
-      ], {
-        duration: duration,
-        easing: 'cubic-bezier(0.16,1,0.3,1)',
-        fill:'forwards'
-      });
-
-      setTimeout(()=>r.remove(), duration + 200);
-    }
-  }
-
-  vignette.style.opacity="1";
-
-  // Burst every 80ms for 2.5 seconds
-  const interval = setInterval(throwRibbon, 80);
-  setTimeout(()=>{
-    clearInterval(interval);
-    vignette.style.opacity="0";
-  },200);
-}
-
-// ---- Unlock Logic ----
-const unlockBtn=document.getElementById("unlockBtn");
-const panel=document.getElementById("unlockPanel");
-const password=document.getElementById("password");
-const error=document.getElementById("error");
-
-unlockBtn.onclick=()=>{ panel.style.display="block"; unlockBtn.style.display="none"; };
-
-password.addEventListener("keydown",e=>{
-  if(e.key==="Enter"){
-    if(password.value.toLowerCase()==="december2022"){
-      document.body.style.overflow="auto";
-
-      document.querySelector(".container").innerHTML=`
-        <div class="dashboard-header">
-          <h1>🎉 Birthday Dashboard</h1>
-          <div class="date">Dec 25 🎂</div>
-          <p style="opacity:0.7; margin-top:6px;">
-A year-in-review, interpreted by someone who notices details.
-</p>
-
-        </div>
-
-
-       <div class="cards">
-          <div class="card overthinking">
-            <h2>Overthinking</h2>
-            <p>Brain opens 37 tabs, closes none. Trending downward compared to last year.</p>
-            <div class="progress-wrapper">
-              <span class="progress-text" id="overthinkingValue">65%</span>
-              <div class="progress-bar"><div class="progress-fill" style="--w:65%; background:#22c55e;"></div></div>
-            </div>
-            <div class="insight">↓ Fewer late-night spiral loops than last year (or may be more):p</div>
-          </div>
-
-          <div class="card ambitious">
-            <h2>Ambitious</h2>
-            <p>Sees the mountain, plans the climb, already thinking of the next one.</p>
-            <div class="progress-wrapper">
-              <span class="progress-text" id="ambitiousValue">88%</span>
-              <div class="progress-bar"><div class="progress-fill" style="--w:88%; background:#2563eb;"></div></div>
-            </div>
-            <div class="insight">↑ Sets goals slightly above what’s expected</div>
-          </div>
-
-          <div class="card">
-            <h2>Considerate</h2>
-            <p>Quietly notices what others need before they even ask.</p>
-            <div class="progress-wrapper">
-              <span class="progress-text">82%</span>
-              <div class="progress-bar"><div class="progress-fill" style="--w:82%; background:#a78bfa;"></div></div>
-            </div>
-            <div class="insight">Remembers things people forget they mentioned</div>
-          </div>
-
-<div class="card detail-oriented">
-  <h2>Detail-oriented</h2>
-  <p id="detailText">Spots the typo everyone else missed. Twice.</p>
-  <div class="progress-wrapper">
-    <span class="progress-text" id="detailValue">90%</span>
-    <div class="progress-bar">
-      <div class="progress-fill" style="--w:90%; background:#fbbf24;"></div>
-    </div>
-  </div>
-  <div class="insight">Consistently identifies edge cases early.</div>
-</div>
-
-
-          <div class="card">
-            <h2>Playful</h2>
-            <p>Serious about work, dangerously unserious at the right moments.</p>
-            <div class="progress-wrapper">
-              <span class="progress-text">75%</span>
-              <div class="progress-bar"><div class="progress-fill" style="--w:75%; background:#38bdf8;"></div></div>
-            </div>
-            <div class="insight">Keeps energy high without breaking the system</div>
-          </div>
-        </div>
-
-        <div class="dashboard-footer">
-          <span class="bug" id="lovableBug">
-            🐞 Bug #042: Lovable · Detected across all modules · Won’t Fix
-            <div class="bug-tooltip" id="bugTooltip">
-              <strong>Internal system log (read-only)</strong><br>
-              • Increases smiles unexpectedly<br>
-              • Causes unnecessary kindness<br>
-              • Engineer refuses to patch it
-            </div>
-          </span>
-          <br><br>
-          <button id="openNote">📄 Personal Note</button>
-          <p style="margin-top:16px; font-size:13px; opacity:0.6;">
-Some things don’t need metrics.
-</p>
-
-        </div>
-      `;
-
-      setTimeout(()=>{
-        // Phase 2: Lovable Bug
-        const bug=document.getElementById("lovableBug");
-        const tooltip=document.getElementById("bugTooltip");
-
-        bug.addEventListener("click",(e)=>{
-          e.stopPropagation();
-          tooltip.classList.toggle("visible");
-        });
-
-        document.addEventListener("click",()=>{
-          tooltip.classList.remove("visible");
-        });
-
-        // Phase 3: Personal Note
-        const openNoteBtn=document.getElementById("openNote");
-        const overlay=document.getElementById("noteOverlay");
-        const closeBtn=document.querySelector(".note-close");
-        const downloadBtn=document.getElementById("downloadBtn");
-        const pdfEmbed=document.getElementById("pdfEmbed");
-
-        openNoteBtn.onclick = () => overlay.classList.add("visible");
-        closeBtn.onclick = () => overlay.classList.remove("visible");
-        overlay.onclick = (e) => { if(e.target===overlay) overlay.classList.remove("visible"); };
-
-        // Download button
-        downloadBtn.onclick = () => {
-          const link = document.createElement("a");
-          link.href = pdfEmbed.src;
-          link.download = "personal-note.pdf";
-          link.click();
-        };
-        // Considerate card subtle animation
-const considerateCard = document.querySelector(".card:nth-child(3)");
-const considerateText = considerateCard.querySelector("p");
-const considerateFill = considerateCard.querySelector(".progress-fill");
-
-const words = ["Quietly", "notices", "what", "others", "need", "before", "they", "even", "ask"];
-let wordIndex = 0;
-
-setInterval(() => {
-  // Highlight a word temporarily
-  const textContent = words.map((w,i) => i===wordIndex ? `<span style="color:#f472b6;">${w}</span>` : w).join(" ");
-  considerateText.innerHTML = textContent;
-
-  
-  // Wiggle progress bar slightly
-  considerateFill.style.transform = `translateX(${Math.random()*4-2}px)`;
-  
-  wordIndex = (wordIndex + 1) % words.length;
-}, 1000);
-
-        // Select the Playful card
-const playfulCard = Array.from(document.querySelectorAll(".card")).find(c => c.querySelector("h2")?.textContent === "Playful");
-
-// Emoji options
-const emojis = ["🎉", "😜", "✨", "🥳", "💫"];
-
-// Function to throw a tiny emoji
-function throwEmoji() {
-  if (!playfulCard) return;
-
-  const emoji = document.createElement("div");
-  emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-  emoji.style.position = "absolute";
-  emoji.style.left = Math.random() * (playfulCard.offsetWidth - 20) + "px";
-  emoji.style.bottom = "10px";
-  emoji.style.fontSize = "18px";
-  emoji.style.pointerEvents = "none";
-  emoji.style.opacity = 1;
-
-  playfulCard.appendChild(emoji);
-
-  const xMove = (Math.random() * 80 - 40); // side movement
-  const duration = 1200 + Math.random() * 400;
-
-  emoji.animate([
-    { transform: `translate(0,0) scale(1)`, opacity: 1 },
-    { transform: `translate(${xMove}px,-80px) scale(1.2)`, opacity: 0 }
-  ], {
-    duration: duration,
-    easing: "ease-out",
-    fill: "forwards"
-  });
-
-  setTimeout(() => emoji.remove(), duration);
-}
-
-// Tiny card bounce
-function bounceCard() {
-  if (!playfulCard) return;
-  playfulCard.animate([
-    { transform: "translateY(0)" },
-    { transform: "translateY(-6px)" },
-    { transform: "translateY(0)" }
-  ], { duration: 500, easing: "ease-in-out" });
-}
-
-// Run every 3 seconds
-setInterval(() => {
-  throwEmoji();
-  bounceCard();
-}, 3000);
-
-
-      },50);
-
-    } else {
-      error.style.color="#f87171";
-      error.innerText="Incorrect password.";
-    }
-  }
-});
-  
-  // all your existing JS ABOVE
-  // birthday logic
-  // unlock logic
-  // dashboard render
-  // tooltip logic
-  // personal note logic
-
-  // ⬇️ ADD THIS AT THE VERY END ⬇️
-  const overthinkValues = [65, 72, 60, 70, 63, 68];
-  let overthinkIndex = 0;
-
-  setInterval(() => {
-    const val = overthinkValues[overthinkIndex];
-    const textEl = document.getElementById("overthinkingValue");
-    const barEl = document.querySelector(".card.overthinking .progress-fill");
-
-    if (textEl && barEl) {
-      textEl.textContent = val + "%";
-      barEl.style.width = val + "%";
-    }
-
-    overthinkIndex = (overthinkIndex + 1) % overthinkValues.length;
-  }, 450);
-  const ambitiousValues = [88, 89, 90, 88, 90];
-let ambitiousIndex = 0;
-
-setInterval(() => {
-  const val = ambitiousValues[ambitiousIndex];
-  const textEl = document.getElementById("ambitiousValue");
-  const barEl = document.querySelector(".card.ambitious .progress-fill");
-
-  if (textEl && barEl) {
-    textEl.textContent = val + "%";
-    barEl.style.width = val + "%";
-  }
-
-  ambitiousIndex = (ambitiousIndex + 1) % ambitiousValues.length;
-}, 600);
-const detailValues = [90, 92, 88, 91, 90];
-let detailIndex = 0;
-
-setInterval(() => {
-  const val = detailValues[detailIndex];
-  const textEl = document.getElementById("detailText");
-  const barEl = document.querySelector(".card.detail-oriented .progress-fill");
-  
-  // Wiggle the bar slightly
-  barEl.style.width = val + "%";
-  barEl.style.transform = `translateX(${Math.random()*4 - 2}px)`; // tiny shake
-  
-  // Add a tiny “typo” flash in text
-  if(textEl){
-    textEl.textContent = "Spots the typo everyoen else missed. Twice.";
-    setTimeout(()=>textEl.textContent="Spots the typo everyone else missed. Twice.",200);
-  }
-  
-  document.getElementById("detailValue").textContent = val + "%";
-  detailIndex = (detailIndex + 1) % detailValues.length;
-}, 800);
-
-
-</script>
-
-</body>
-</html>
-
-
-
-
-
-
-
-
-
+if(!isBirthday){document.body.innerHTML=`<div style="display:flex;align-items:center;justify-content:center;height:100vh;width:100vw;background:#0f172a;color:#e5e7eb;font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;flex-direction:column;"><div style="font-size:10vw;font-weight:800;animation:pulse 1.5s infinite;">NO</div><div style="margin-top:20px;font-size:2vw;opacity:0.8;">Not today 🎂</div><style>@keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.05);}}</style></div>`;}
+if(isBirthday){const colors=["#38bdf8","#22c55e","#fbbf24","#a78bfa","#f472b6","#f97316"];const vignette=document.getElementById("vignette");function throwRibbon(){const count=50;for(let i=0;i<count;i++){const r=document.createElement("div");r.className="confetti";const width=Math.random()*6+4;height=Math.random()*20+15;r.style.width=width+"px";r.style.height=height+"px";r.style.left=Math.random()*100+"vw";r.style.background=colors[Math.floor(Math.random()*colors.length)];r.style.opacity=Math.random()*0.9+0.3;document.body.appendChild(r);const rotate=Math.random()*360;const xWobble=Math.random()*100-50;const duration=Math.random()*800+1200;r.animate([{transform:`translate(${xWobble/2}px,-40px) rotate(${rotate}deg)`},{transform:`translate(${xWobble}px,${innerHeight+100}px) rotate(${rotate+360}deg)`}],{duration:duration,easing:'cubic-bezier(0.16,1,0.3,1)',fill:'forwards'});setTimeout(()=>r.remove(),duration+200);}}vignette.style.opacity="1";const interval=setInterval(throwRibbon,80);setTimeout(()=>{clearInterval(interval);vignette.style.opacity="0";},200);}
+const unlockBtn=document.getElementById("unlockBtn"),panel=document.getElementById("unlockPanel"),password=document.getElementById("password"),error=document.getElementById("error");unlockBtn.onclick=()=>{panel.style.display="block";unlockBtn.style.display="none";};
+password.addEventListener("keydown",e=>{if(e.key==="Enter"){if(password.value.toLowerCase()==="december2022"){document.body.style.overflow="auto";document.querySelector(".container").innerHTML=`<div class="dashboard-header"><h1>🎉 Birthday Dashboard</h1><div class="date">Dec 25 🎂</div><p style="opacity:0.7; margin-top:6px;">A year-in-review, interpreted by someone who notices details.</p></div><div class="cards"><div class="card overthinking"><h2>Overthinking</h2><p>Brain opens 37 tabs, closes none. Trending downward compared to last year.</p><div class="progress-wrapper"><span class="progress-text" id="overthinkingValue">65%</span><div class="progress-bar"><div class="progress-fill" style="--w:65%; background:#22c55e;"></div></div></div><div class="insight">↓ Fewer late-night spiral loops than last year (or may be more):p</div></div><div class="card ambitious"><h2>Ambitious</h2><p>Sees the mountain, plans the climb, already thinking of the next one.</p><div class="progress-wrapper"><span class="progress-text" id="ambitiousValue">88%</span><div class="progress-bar"><div class="progress-fill" style="--w:88%; background:#2563eb;"></div></div></div><div class="insight">↑ Sets goals slightly above what’s expected</div></div><div class="card considerate"><h2>Considerate</h2><p>Quietly notices what others need before they even ask <span class="floatingEmoji">🌟</span></p><div class="progress-wrapper"><span class="progress-text">82%</span><div class="progress-bar"><div class="progress-fill" style="--w:82%; background:#a78bfa;"></div></div></div><div class="insight">Remembers things people forget they mentioned</div></div><div class="card" id="detailCard"><h2>Detail-oriented</h2><p id="detailText">Spots the typo everyone else missed<span class="flyComma">.</span> Twice.</p><div class="progress-wrapper"><span class="progress-text" id="detailValue">90%</span><div class="progress-bar"><div class="progress-fill" style="--w:90%; background:#fbbf24;"></div></div></div><div class="insight">Consistently identifies edge cases early.</div></div><div class="card playful"><h2>Playful</h2><p>Serious about work, dangerously unserious at the right moments <span class="floatingEmoji">😜</span></p><div class="progress-wrapper"><span class="progress-text">75%</span><div class="progress-bar"><div class="progress-fill" style="--w:75%; background:#38bdf8;"></div></div></div><div class="insight">Keeps energy high without breaking the system</div></div></div><div class="dashboard-footer"><span class="bug" id="lovableBug">🐞 Bug #042: Lovable · Detected across all modules · Won’t Fix<div class="bug-tooltip" id="bugTooltip"><strong>Internal system log (read-only)</strong><br>• Increases smiles unexpectedly<br>• Causes unnecessary kindness<br>• Engineer refuses to patch it</div></span><br><br><button id="openNote">📄 Personal Note</button><p style="margin-top:16px; font-size:13px; opacity:0.6;">Some things don’t need metrics.</p></div>`;
+setTimeout(()=>{
+const bug=document.getElementById("lovableBug"),tooltip=document.getElementById("bugTooltip");bug.addEventListener("click",e=>{e.stopPropagation();tooltip.classList.toggle("visible");});document.addEventListener("click",()=>{tooltip.classList.remove("visible");});
+const openNoteBtn=document.getElementById("openNote"),overlay=document.getElementById("noteOverlay"),closeBtn=document.querySelector(".note-close"),downloadBtn=document.getElementById("downloadBtn"),pdfEmbed=document.getElementById("pdfEmbed");openNoteBtn.onclick=()=>overlay.classList.add("visible");closeBtn.onclick=()=>overlay.classList.remove("visible");overlay.onclick=e=>{if(e.target===overlay) overlay.classList.remove("visible");};downloadBtn.onclick=()=>{const link=document.createElement("a");link.href=pdfEmbed.src;link.download="personal-note.pdf";link.click();};
+const detailComma=document.querySelector("#detailText .flyComma");setInterval(()=>{if(detailComma){detailComma.style.animation="flyCommaAnim 1s ease forwards";setTimeout(()=>{detailComma.style.animation="";},1000);}},3000);
+const floatingEmojis=document.querySelectorAll(".floatingEmoji");floatingEmojis.forEach(e=>{e.style.animation="floatEmoji 2s ease-in-out infinite";});},50);
+}else{error.style.color="#f87171";error.innerText="Incorrect password.";}}});
+const overthinkValues=[65,72,60,70,63,68];let overthinkIndex=0;setInterval(()=>{const val=overthinkValues[overthinkIndex];const textEl=document.getElementById("overthinkingValue");const barEl=document.querySelector(".card.overthinking .progress-fill");if(textEl&&barEl){textEl.textContent=val+"%";barEl.style.width=val+"%";}overthinkIndex=(overthinkIndex+1)%overthinkValues.length;},450);
+const ambitiousValues=[88,89,90,88,90];let ambitiousIndex=0;setInterval(()=>{const val=ambitiousValues[ambitiousIndex];const textEl=document.getElementById("ambitiousValue");const barEl=document.querySelector(".card.ambitious .progress-fill");if(textEl&&barEl){textEl.textContent=val+"%";barEl.style.width=val
