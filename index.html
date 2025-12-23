@@ -251,6 +251,7 @@ button:hover { background:#1d4ed8; }
   color:#020617;
   box-shadow:0 16px 40px rgba(0,0,0,0.5);
   position:relative;
+  transition: all 0.3s ease; /* smooth zoom animation */
 }
 
 .note-close {
@@ -282,10 +283,20 @@ button:hover { background:#1d4ed8; }
 
 <!-- Phase 3: Personal Note Modal -->
 <div class="note-overlay" id="noteOverlay">
-  <div class="note-content">
+  <div class="note-content" id="noteContent">
     <span class="note-close">✖</span>
     <h2>Personal Note 💌</h2>
-    <embed src="PDF_1754.pdf" type="application/pdf" width="100%" height="400px">
+    <embed src="PDF_1754.pdf" type="application/pdf" width="100%" height="400px" id="pdfEmbed">
+
+    <!-- Controls -->
+    <div style="margin-top:15px; display:flex; justify-content:space-between; gap:10px;">
+      <button id="downloadBtn" style="flex:1; padding:10px; border:none; border-radius:8px; background:#2563eb; color:white; cursor:pointer;">
+        ⬇ Download
+      </button>
+      <button id="zoomBtn" style="flex:1; padding:10px; border:none; border-radius:8px; background:#22c55e; color:white; cursor:pointer;">
+        🔍 Zoom
+      </button>
+    </div>
   </div>
 </div>
 
@@ -403,10 +414,39 @@ password.addEventListener("keydown",e=>{
         const openNoteBtn=document.getElementById("openNote");
         const overlay=document.getElementById("noteOverlay");
         const closeBtn=document.querySelector(".note-close");
+        const downloadBtn=document.getElementById("downloadBtn");
+        const zoomBtn=document.getElementById("zoomBtn");
+        const noteContent=document.getElementById("noteContent");
+        const pdfEmbed=document.getElementById("pdfEmbed");
 
         openNoteBtn.onclick = () => overlay.classList.add("visible");
         closeBtn.onclick = () => overlay.classList.remove("visible");
         overlay.onclick = (e) => { if(e.target===overlay) overlay.classList.remove("visible"); };
+
+        // Download button
+        downloadBtn.onclick = () => {
+          const link = document.createElement("a");
+          link.href = pdfEmbed.src;
+          link.download = "personal-note.pdf";
+          link.click();
+        };
+
+        // Zoom toggle
+        let zoomed = false;
+        zoomBtn.onclick = () => {
+          zoomed = !zoomed;
+          if(zoomed){
+            noteContent.style.width = "90vw";
+            noteContent.style.height = "90vh";
+            pdfEmbed.style.height = "80vh";
+            zoomBtn.innerText = "🔽 Shrink";
+          } else {
+            noteContent.style.width = "500px";
+            noteContent.style.height = "80vh";
+            pdfEmbed.style.height = "400px";
+            zoomBtn.innerText = "🔍 Zoom";
+          }
+        };
       },50);
 
     } else {
@@ -419,5 +459,3 @@ password.addEventListener("keydown",e=>{
 
 </body>
 </html>
-
-
