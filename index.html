@@ -480,7 +480,7 @@ A year-in-review, interpreted by someone who notices details.
     Spots the typo everyone else missed<span class="flyComma">.</span> Twice.
   </p>
   <div class="progress-wrapper">
-    <span class="progress-text">90%</span>
+    <span class="progress-text" id="detailValue">90%</span>
     <div class="progress-bar">
       <div class="progress-fill" style="--w:90%; background:#fbbf24;"></div>
     </div>
@@ -553,18 +553,16 @@ Some things don’t need metrics.
           link.click();
         };
         // Select the flying comma element
-const detailComma = document.querySelector("#detailText .flyComma");
-
-// Animate the comma every 3 seconds
-setInterval(() => {
-  if(detailComma){
-    detailComma.style.animation = "flyCommaAnim 1s ease forwards";
-    setTimeout(() => {
-      detailComma.style.animation = ""; // reset for next loop
-    }, 1000);
-  }
-}, 3000);
-      },50);
+  const detailComma = document.querySelector("#detailText .flyComma");
+  setInterval(() => {
+    if(detailComma){
+      detailComma.style.animation = "flyCommaAnim 1s ease forwards";
+      setTimeout(() => {
+        detailComma.style.animation = ""; // reset for next loop
+      }, 1000);
+    }
+  }, 3000);
+}, 50);
 
     } else {
       error.style.color="#f87171";
@@ -639,6 +637,7 @@ setInterval(() => {
 
 </body>
 </html>
+
 
 
 
