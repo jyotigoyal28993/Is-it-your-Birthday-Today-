@@ -86,7 +86,17 @@ button:hover { background:#1d4ed8; }
 
 /* ---------- DASHBOARD ---------- */
 
-.dashboard-header {
+.card.overthinking:hover .progress-fill {
+  animation: overthinkPulse 0.9s ease;
+}
+
+@keyframes overthinkPulse {
+  0% { width: 65%; }
+  50% { width: 68%; }
+  100% { width: 65%; }
+}
+
+  .dashboard-header {
   display:flex;
   justify-content:space-between;
   align-items:center;
@@ -403,8 +413,9 @@ A year-in-review, interpreted by someone who notices details.
 </p>
 
         </div>
+<div class="card overthinking">
 
-        <div class="cards">
+     //   <div class="cards">
           <div class="card">
             <h2>Overthinking</h2>
             <p>Brain opens 37 tabs, closes none. Trending downward compared to last year.</p>
@@ -519,6 +530,7 @@ Some things don’t need metrics.
 
 </body>
 </html>
+
 
 
 
