@@ -97,26 +97,6 @@ button:hover { background:#1d4ed8; }
   font-weight:700;
 }
 
-.header-actions {
-  display:flex;
-  align-items:center;
-  gap:14px;
-}
-
-.note-btn {
-  background:#020617;
-  border:1px solid #334155;
-  color:#e5e7eb;
-  padding:8px 12px;
-  border-radius:999px;
-  cursor:pointer;
-  font-size:14px;
-}
-.note-btn:hover {
-  background:#020617;
-  border-color:#64748b;
-}
-
 .date { font-size:16px; opacity:0.7; }
 
 .cards {
@@ -142,6 +122,12 @@ button:hover { background:#1d4ed8; }
   transform: translateY(-6px);
   box-shadow: 0 14px 32px rgba(0,0,0,0.45);
 }
+
+.card:nth-child(1){ animation-delay:0.15s; }
+.card:nth-child(2){ animation-delay:0.3s; }
+.card:nth-child(3){ animation-delay:0.45s; }
+.card:nth-child(4){ animation-delay:0.6s; }
+.card:nth-child(5){ animation-delay:0.75s; }
 
 @keyframes cardIn {
   to { opacity:1; transform:translateY(0); }
@@ -191,7 +177,7 @@ button:hover { background:#1d4ed8; }
   transform: translateY(0);
 }
 
-/* ---------- FOOTER BUG ---------- */
+/* ---------- FOOTER BUG (PHASE 2) ---------- */
 
 .dashboard-footer {
   margin-top:32px;
@@ -223,61 +209,16 @@ button:hover { background:#1d4ed8; }
   width:240px;
   opacity:0;
   pointer-events:none;
+  box-shadow:0 12px 28px rgba(0,0,0,0.45);
   transition:opacity 0.25s ease, transform 0.25s ease;
+  text-align:left;
+  z-index:10;
 }
 
 .bug-tooltip.visible {
   opacity:1;
   transform:translateX(-50%) translateY(0);
   pointer-events:auto;
-}
-
-/* ---------- PHASE 3: PERSONAL NOTE ---------- */
-
-.note-overlay {
-  position:fixed;
-  inset:0;
-  background:rgba(2,6,23,0.7);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:50;
-}
-
-.note {
-  background:#f8fafc;
-  color:#020617;
-  width:360px;
-  padding:26px;
-  border-radius:16px;
-  transform:scale(0.9) rotateX(-8deg);
-  opacity:0;
-  transition:all 0.35s ease;
-  box-shadow:0 30px 60px rgba(0,0,0,0.5);
-}
-
-.note-overlay.visible .note {
-  opacity:1;
-  transform:scale(1) rotateX(0deg);
-}
-
-.note h3 {
-  margin-bottom:12px;
-}
-
-.note p {
-  font-size:15px;
-  line-height:1.6;
-}
-
-.note-close {
-  margin-top:18px;
-  background:#2563eb;
-  color:white;
-  border:none;
-  padding:8px 12px;
-  border-radius:8px;
-  cursor:pointer;
 }
 </style>
 </head>
@@ -298,20 +239,30 @@ button:hover { background:#1d4ed8; }
   </div>
 </div>
 
-<!-- Personal Note -->
-<div class="note-overlay" id="noteOverlay">
-  <div class="note">
-    <h3>Personal Note 💌</h3>
-    <p>
-      This dashboard shows metrics, patterns, and traits —  
-      but none of it captures the warmth you bring into people’s lives.
-      That part doesn’t fit into charts… and honestly, it shouldn’t.
-    </p>
-    <button class="note-close">Close</button>
-  </div>
-</div>
-
 <script>
+const today = new Date(2025,11,25);
+const isBirthday = today.getDate()===25 && today.getMonth()===11;
+
+if(isBirthday){
+  const colors=["#38bdf8","#22c55e","#fbbf24","#a78bfa"];
+  const vignette=document.getElementById("vignette");
+
+  function throwRibbon(){
+    const r=document.createElement("div");
+    r.className="confetti";
+    r.style.left=Math.random()*100+"vw";
+    r.style.background=colors[Math.floor(Math.random()*colors.length)];
+    document.body.appendChild(r);
+    r.animate([{transform:"translateY(-40px)"},{transform:`translateY(${innerHeight+200}px)`}],
+      {duration:2000,easing:"cubic-bezier(0.16,1,0.3,1)",fill:"forwards"});
+    setTimeout(()=>r.remove(),2300);
+  }
+
+  vignette.style.opacity="1";
+  for(let i=0;i<30;i++) setTimeout(throwRibbon,i*80);
+  setTimeout(()=>vignette.style.opacity="0",1200);
+}
+
 const unlockBtn=document.getElementById("unlockBtn");
 const panel=document.getElementById("unlockPanel");
 const password=document.getElementById("password");
@@ -327,35 +278,75 @@ password.addEventListener("keydown",e=>{
       document.querySelector(".container").innerHTML=`
         <div class="dashboard-header">
           <h1>🎉 Birthday Dashboard</h1>
-          <div class="header-actions">
-            <button class="note-btn" id="openNote">✉️ Personal Note</button>
-            <div class="date">Dec 25 🎂</div>
-          </div>
+          <div class="date">Dec 25 🎂</div>
         </div>
 
         <div class="cards">
-          <div class="card"><h2>Overthinking</h2><p>Brain opens 37 tabs.</p><div class="progress-bar"><div class="progress-fill" style="--w:65%; background:#22c55e;"></div></div><div class="insight">Improved from last year</div></div>
-          <div class="card"><h2>Ambitious</h2><p>Always planning the next climb.</p><div class="progress-bar"><div class="progress-fill" style="--w:88%; background:#2563eb;"></div></div><div class="insight">Targets stretch goals</div></div>
-          <div class="card"><h2>Considerate</h2><p>Notices before asked.</p><div class="progress-bar"><div class="progress-fill" style="--w:82%; background:#a78bfa;"></div></div><div class="insight">Reads the room well</div></div>
-          <div class="card"><h2>Detail-oriented</h2><p>Finds what others miss.</p><div class="progress-bar"><div class="progress-fill" style="--w:90%; background:#fbbf24;"></div></div><div class="insight">Edge-case hunter</div></div>
-          <div class="card"><h2>Playful</h2><p>Serious when needed.</p><div class="progress-bar"><div class="progress-fill" style="--w:75%; background:#38bdf8;"></div></div><div class="insight">Keeps morale high</div></div>
+          <div class="card">
+            <h2>Overthinking</h2>
+            <p>Brain opens 37 tabs, closes none. Improved slightly this year though.</p>
+            <div class="progress-bar"><div class="progress-fill" style="--w:65%; background:#22c55e;"></div></div>
+            <div class="insight">↓ Fewer late-night spiral loops than last year</div>
+          </div>
+
+          <div class="card">
+            <h2>Ambitious</h2>
+            <p>Sees the mountain, plans the climb, already thinking of the next one.</p>
+            <div class="progress-bar"><div class="progress-fill" style="--w:88%; background:#2563eb;"></div></div>
+            <div class="insight">↑ Sets goals slightly above what’s expected</div>
+          </div>
+
+          <div class="card">
+            <h2>Considerate</h2>
+            <p>Quietly notices what others need before they even ask.</p>
+            <div class="progress-bar"><div class="progress-fill" style="--w:82%; background:#a78bfa;"></div></div>
+            <div class="insight">Remembers things people forget they mentioned</div>
+          </div>
+
+          <div class="card">
+            <h2>Detail-oriented</h2>
+            <p>Spots the typo everyone else missed. Twice.</p>
+            <div class="progress-bar"><div class="progress-fill" style="--w:90%; background:#fbbf24;"></div></div>
+            <div class="insight">Finds edge cases hiding in plain sight</div>
+          </div>
+
+          <div class="card">
+            <h2>Playful</h2>
+            <p>Serious about work, dangerously unserious at the right moments.</p>
+            <div class="progress-bar"><div class="progress-fill" style="--w:75%; background:#38bdf8;"></div></div>
+            <div class="insight">Keeps energy high without breaking the system</div>
+          </div>
         </div>
 
         <div class="dashboard-footer">
           <span class="bug" id="lovableBug">
-            🐞 Bug #042: Lovable · Won’t Fix
+            🐞 Bug #042: Lovable · Detected across all modules · Won’t Fix
             <div class="bug-tooltip" id="bugTooltip">
-              Causes unexpected kindness.
+              <strong>Debug log:</strong><br>
+              • Increases team smiles unexpectedly<br>
+              • Causes unnecessary kindness<br>
+              • Engineers refuse to patch it
             </div>
           </span>
         </div>
       `;
 
-      const overlay=document.getElementById("noteOverlay");
-      document.getElementById("openNote").onclick=()=>overlay.classList.add("visible");
-      overlay.onclick=e=>{ if(e.target===overlay) overlay.classList.remove("visible"); };
-      document.querySelector(".note-close").onclick=()=>overlay.classList.remove("visible");
+      setTimeout(()=>{
+        const bug=document.getElementById("lovableBug");
+        const tooltip=document.getElementById("bugTooltip");
+
+        bug.addEventListener("click",(e)=>{
+          e.stopPropagation();
+          tooltip.classList.toggle("visible");
+        });
+
+        document.addEventListener("click",()=>{
+          tooltip.classList.remove("visible");
+        });
+      },50);
+
     } else {
+      error.style.color="#f87171";
       error.innerText="Incorrect password.";
     }
   }
@@ -364,3 +355,4 @@ password.addEventListener("keydown",e=>{
 
 </body>
 </html>
+
