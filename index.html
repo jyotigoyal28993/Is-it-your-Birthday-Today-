@@ -113,7 +113,17 @@ button:hover { background:#1d4ed8; }
   100% { width: 88%; }
 }
 
+.flyComma {
+  display:inline-block;
+  position:relative;
+  cursor:default;
+}
 
+@keyframes flyCommaAnim {
+  0% { transform: translate(0,0) rotate(0deg); }
+  50% { transform: translate(50px,-40px) rotate(180deg); }
+  100% { transform: translate(0,-80px) rotate(360deg); opacity:0; }
+}
   .dashboard-header {
   display:flex;
   justify-content:space-between;
@@ -464,11 +474,13 @@ A year-in-review, interpreted by someone who notices details.
             <div class="insight">Remembers things people forget they mentioned</div>
           </div>
 
-<div class="card detail-oriented">
+<div class="card" id="detailCard">
   <h2>Detail-oriented</h2>
-  <p id="detailText">Spots the typo everyone else missed. Twice.</p>
+  <p id="detailText">
+    Spots the typo everyone else missed<span class="flyComma">.</span> Twice.
+  </p>
   <div class="progress-wrapper">
-    <span class="progress-text" id="detailValue">90%</span>
+    <span class="progress-text">90%</span>
     <div class="progress-bar">
       <div class="progress-fill" style="--w:90%; background:#fbbf24;"></div>
     </div>
@@ -607,12 +619,19 @@ setInterval(() => {
   document.getElementById("detailValue").textContent = val + "%";
   detailIndex = (detailIndex + 1) % detailValues.length;
 }, 800);
+const comma = document.querySelector("#detailText .flyComma");
 
+// trigger the flying comma animation every 3 seconds
+setInterval(() => {
+  comma.style.animation = "flyCommaAnim 1s ease forwards";
+  setTimeout(() => comma.style.animation = "", 1000);
+}, 3000);
 
 </script>
 
 </body>
 </html>
+
 
 
 
