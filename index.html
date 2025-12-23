@@ -73,7 +73,7 @@ button:hover { background:#1d4ed8; }
 .hint { margin-top:10px; font-size:13px; opacity:0.6; }
 .error { margin-top:10px; font-size:14px; }
 
-/* ribbons */
+/* confetti */
 .confetti {
   position: fixed;
   top: -40px;
@@ -116,7 +116,6 @@ button:hover { background:#1d4ed8; }
   transform: translateY(14px);
   animation: cardIn 0.6s ease forwards;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
-  position: relative;
 }
 
 .card:hover {
@@ -146,23 +145,15 @@ button:hover { background:#1d4ed8; }
   line-height:1.4;
 }
 
-/* ✅ FIXED percentage positioning ONLY */
+/* progress bars */
 .progress-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 8px;
-}
-
-.progress-text {
-  font-size: 12px;
-  font-weight: 600;
-  color:#c7d2fe;
-  white-space: nowrap;
+  display:flex;
+  align-items:center;
+  gap:10px;
 }
 
 .progress-bar {
-  flex: 1;
+  flex:1;
   height:10px;
   background:#334155;
   border-radius:6px;
@@ -180,18 +171,10 @@ button:hover { background:#1d4ed8; }
   to { width: var(--w); }
 }
 
-.insight {
-  font-size:13px;
-  margin-top:10px;
-  opacity:0;
-  transform: translateY(4px);
-  transition: opacity 0.25s ease, transform 0.25s ease;
+.progress-text {
+  font-size:12px;
+  font-weight:600;
   color:#c7d2fe;
-}
-
-.card:hover .insight {
-  opacity:1;
-  transform: translateY(0);
 }
 
 /* ---------- FOOTER BUG ---------- */
@@ -229,16 +212,14 @@ button:hover { background:#1d4ed8; }
   box-shadow:0 12px 28px rgba(0,0,0,0.45);
   transition:opacity 0.25s ease, transform 0.25s ease;
   text-align:left;
-  z-index:10;
 }
 
 .bug-tooltip.visible {
   opacity:1;
   transform:translateX(-50%) translateY(0);
-  pointer-events:auto;
 }
 
-/* ---------- PERSONAL NOTE MODAL ---------- */
+/* ---------- PERSONAL NOTE ---------- */
 
 .note-overlay {
   position:fixed;
@@ -292,7 +273,7 @@ button:hover { background:#1d4ed8; }
 
   <div class="unlock" id="unlockPanel">
     <input type="password" id="password" placeholder="Enter password" />
-    <div class="hint">Hint: december2050</div>
+    <div class="hint">Hint: december2022</div>
     <div class="error" id="error"></div>
   </div>
 </div>
@@ -301,16 +282,94 @@ button:hover { background:#1d4ed8; }
   <div class="note-content">
     <span class="note-close">✖</span>
     <h2>Personal Note 💌</h2>
-    <embed src="PDF_1754.pdf" type="application/pdf" width="100%" height="400px" id="pdfEmbed">
-    <div style="margin-top:15px;">
-      <button id="downloadBtn" style="width:100%; padding:10px;">⬇ Download</button>
-    </div>
+    <embed src="PDF_1754.pdf" type="application/pdf" width="100%" height="400px">
+    <button id="downloadBtn" style="width:100%; margin-top:12px;">⬇ Download</button>
   </div>
 </div>
 
-<!-- JS unchanged -->
 <script>
-/* your original JS exactly as-is */
+const today=new Date(2025,11,25);
+if(today.getDate()===25&&today.getMonth()===11){
+  const colors=["#38bdf8","#22c55e","#fbbf24","#a78bfa"];
+  const vignette=document.getElementById("vignette");
+  vignette.style.opacity="1";
+  for(let i=0;i<30;i++){
+    setTimeout(()=>{
+      const c=document.createElement("div");
+      c.className="confetti";
+      c.style.left=Math.random()*100+"vw";
+      c.style.background=colors[Math.floor(Math.random()*colors.length)];
+      document.body.appendChild(c);
+      c.animate([{transform:"translateY(-40px)"},{transform:`translateY(${innerHeight+200}px)`}],{duration:2000});
+      setTimeout(()=>c.remove(),2200);
+    },i*80);
+  }
+  setTimeout(()=>vignette.style.opacity="0",1200);
+}
+
+const unlockBtn=document.getElementById("unlockBtn");
+const panel=document.getElementById("unlockPanel");
+const password=document.getElementById("password");
+const error=document.getElementById("error");
+
+unlockBtn.onclick=()=>{panel.style.display="block";unlockBtn.style.display="none";};
+
+password.addEventListener("keydown",e=>{
+if(e.key==="Enter"){
+if(password.value==="december2022"){
+document.querySelector(".container").innerHTML=`
+<div class="dashboard-header">
+<h1>🎉 Birthday Dashboard</h1>
+<div class="date">Dec 25 🎂</div>
+</div>
+
+<div class="cards">
+${[
+["Overthinking","65%","#22c55e"],
+["Ambitious","88%","#2563eb"],
+["Considerate","82%","#a78bfa"],
+["Detail-oriented","90%","#fbbf24"],
+["Playful","75%","#38bdf8"]
+].map(d=>`
+<div class="card">
+<h2>${d[0]}</h2>
+<div class="progress-wrapper">
+<div class="progress-bar">
+<div class="progress-fill" style="--w:${d[1]}; background:${d[2]}"></div>
+</div>
+<span class="progress-text">${d[1]}</span>
+</div>
+</div>`).join("")}
+</div>
+
+<div class="dashboard-footer">
+<span class="bug" id="bug">🐞 Bug #042
+<div class="bug-tooltip" id="tooltip">Lovable. Won’t fix.</div>
+</span><br><br>
+<button id="openNote">📄 Personal Note</button>
+</div>
+`;
+
+setTimeout(()=>{
+const bug=document.getElementById("bug");
+const tooltip=document.getElementById("tooltip");
+bug.onclick=e=>{e.stopPropagation();tooltip.classList.toggle("visible");};
+document.onclick=()=>tooltip.classList.remove("visible");
+
+document.getElementById("openNote").onclick=()=>document.getElementById("noteOverlay").classList.add("visible");
+document.querySelector(".note-close").onclick=()=>document.getElementById("noteOverlay").classList.remove("visible");
+document.getElementById("downloadBtn").onclick=()=>{
+const a=document.createElement("a");
+a.href="PDF_1754.pdf";a.download="personal-note.pdf";a.click();
+};
+},50);
+
+}else{
+error.textContent="Incorrect password.";
+error.style.color="#f87171";
+}
+}
+});
 </script>
 
 </body>
