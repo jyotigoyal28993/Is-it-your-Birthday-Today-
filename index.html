@@ -171,6 +171,34 @@ button:hover { background:#1d4ed8; }
   padding:6px 12px;
   border-radius:999px;
 }
+  /* ---------- PHASE 1 INTERACTIONS ---------- */
+
+/* card hover */
+.card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  position: relative;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 32px rgba(0,0,0,0.45);
+}
+
+/* insight text (hidden by default) */
+.insight {
+  font-size:13px;
+  margin-top:10px;
+  opacity:0;
+  transform: translateY(4px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  color:#c7d2fe;
+}
+
+.card:hover .insight {
+  opacity:1;
+  transform: translateY(0);
+}
+
 </style>
 </head>
 
@@ -230,12 +258,15 @@ password.addEventListener("keydown",e=>{
           <div class="date">Dec 25 🎂</div>
         </div>
 
-        <div class="cards">
-          <div class="card">
-            <h2>Overthinking</h2>
-            <p>Brain opens 37 tabs, closes none. Improved slightly this year though.</p>
-            <div class="progress-bar"><div class="progress-fill" style="--w:65%; background:#22c55e;"></div></div>
-          </div>
+<div class="card">
+  <h2>Overthinking</h2>
+  <p>Brain opens 37 tabs, closes none. Improved slightly this year though.</p>
+  <div class="progress-bar">
+    <div class="progress-fill" style="--w:65%; background:#22c55e;"></div>
+  </div>
+  <div class="insight">↓ Fewer late-night spiral loops than last year</div>
+</div>
+
 
           <div class="card">
             <h2>Ambitious</h2>
@@ -276,3 +307,4 @@ password.addEventListener("keydown",e=>{
 
 </body>
 </html>
+
