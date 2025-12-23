@@ -326,7 +326,7 @@ button:hover { background:#1d4ed8; }
 
   <div class="unlock" id="unlockPanel">
     <input type="password" id="password" placeholder="Enter password" />
-    <div class="hint">Hint: month and year you landed in the US (ex:december2050)</div>
+    <div class="hint">Hint: month and year the user landed in this world (ex:december2080)</div>
     <div class="error" id="error"></div>
   </div>
 </div>
@@ -422,7 +422,7 @@ unlockBtn.onclick=()=>{ panel.style.display="block"; unlockBtn.style.display="no
 
 password.addEventListener("keydown",e=>{
   if(e.key==="Enter"){
-    if(password.value.toLowerCase()==="december2022"){
+    if(password.value.toLowerCase()==="december1992"){
       document.body.style.overflow="auto";
 
       document.querySelector(".container").innerHTML=`
@@ -693,6 +693,7 @@ setInterval(() => {
 
 </body>
 </html>
+
 
 
 
