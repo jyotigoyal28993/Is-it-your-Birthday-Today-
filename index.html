@@ -120,10 +120,6 @@ button:hover { background:#1d4ed8; }
 }
 
 
-.card.overthinking .progress-fill {
-  animation: overthinkJump 2.8s ease-in-out infinite;
-}
-
 @keyframes overthinkJump {
   0%   { width: 65%; }
   15%  { width: 72%; } /* spike */
@@ -727,6 +723,47 @@ if (overthinkingValue && overthinkingBar) {
     overthinkingBar.style.animation = "fillBar 0.6s ease forwards";
   });
 }
+// ---- Easter Egg #2: Fake Analytics Mode (FIXED) ----
+const overthinkingValue = document.getElementById("overthinkingValue");
+const overthinkingBar = document.querySelector(".card.overthinking .progress-fill");
+
+if (overthinkingValue && overthinkingBar) {
+  const states = [
+    { label: "65%", width: "65%", note: "Baseline (self-reported)" },
+    { label: "72%", width: "72%", note: "Detected during late-night thinking" },
+    { label: "58%", width: "58%", note: "Adjusted after reality checks" },
+    { label: "??%", width: "65%", note: "Confidence interval unstable" }
+  ];
+
+  let index = 0;
+  let autoResumeTimer;
+
+  overthinkingValue.title = "Click for analytics mode";
+  overthinkingValue.style.cursor = "pointer";
+
+  overthinkingValue.addEventListener("click", (e) => {
+    e.stopPropagation();
+    index = (index + 1) % states.length;
+
+    // stop auto animation
+    overthinkingBar.style.animation = "none";
+
+    // apply fake analytics
+    overthinkingValue.textContent = states[index].label;
+    overthinkingValue.title = states[index].note;
+    overthinkingBar.style.width = states[index].width;
+
+    // resume natural behavior after 4s
+    clearTimeout(autoResumeTimer);
+    autoResumeTimer = setTimeout(() => {
+      overthinkingBar.style.animation = "overthinkJump 2.8s ease-in-out infinite";
+      overthinkingValue.textContent = "65%";
+    }, 4000);
+  });
+
+  // start subtle auto animation
+  overthinkingBar.style.animation = "overthinkJump 2.8s ease-in-out infinite";
+}
 
       },50);
 
@@ -744,22 +781,7 @@ if (overthinkingValue && overthinkingBar) {
   // tooltip logic
   // personal note logic
 
-  // ⬇️ ADD THIS AT THE VERY END ⬇️
-  const overthinkValues = [65, 72, 60, 70, 63, 68];
-  let overthinkIndex = 0;
-
-  setInterval(() => {
-    const val = overthinkValues[overthinkIndex];
-    const textEl = document.getElementById("overthinkingValue");
-    const barEl = document.querySelector(".card.overthinking .progress-fill");
-
-    if (textEl && barEl) {
-      textEl.textContent = val + "%";
-      barEl.style.width = val + "%";
-    }
-
-    overthinkIndex = (overthinkIndex + 1) % overthinkValues.length;
-  }, 450);
+ 
  // Ambitious dynamic pulse (point 1)
 const ambitiousValues = [88, 92, 85, 95, 90, 93];
 let ambitiousIndex = 0;
@@ -786,6 +808,7 @@ barEl.style.background = colors[Math.floor(Math.random()*colors.length)];
 
 </body>
 </html>
+
 
 
 
