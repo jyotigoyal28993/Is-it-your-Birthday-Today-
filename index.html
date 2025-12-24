@@ -85,6 +85,17 @@ button:hover { background:#1d4ed8; }
 }
 
 /* ---------- DASHBOARD ---------- */
+.progress-text {
+  font-size: 13px;
+  opacity: 0.7;
+  cursor: pointer;
+  user-select: none;
+}
+
+.progress-text.active {
+  opacity: 1;
+  color: #c7d2fe;
+}
 
   /* --- Easter Egg: Overthinking Hover --- */
 .stare-egg {
@@ -677,9 +688,34 @@ setTimeout(() => {
     egg.classList.remove("visible");
   });
 }, 150);
+// ---- Easter Egg #2: Fake Analytics Mode ----
+const overthinkingValue = document.getElementById("overthinkingValue");
+const overthinkingBar = document.querySelector(".card.overthinking .progress-fill");
 
+if (overthinkingValue && overthinkingBar) {
+  const states = [
+    { label: "65%", width: "65%", note: "Baseline (self-reported)" },
+    { label: "72%", width: "72%", note: "Detected during late-night thinking" },
+    { label: "58%", width: "58%", note: "Adjusted after reality checks" },
+    { label: "??%", width: "65%", note: "Confidence interval unstable" }
+  ];
 
+  let index = 0;
 
+  overthinkingValue.addEventListener("click", (e) => {
+    e.stopPropagation();
+    index = (index + 1) % states.length;
+
+    overthinkingValue.textContent = states[index].label;
+    overthinkingValue.classList.add("active");
+    overthinkingValue.title = states[index].note;
+
+    overthinkingBar.style.setProperty("--w", states[index].width);
+    overthinkingBar.style.animation = "none";
+    overthinkingBar.offsetHeight; // force reflow
+    overthinkingBar.style.animation = "fillBar 0.6s ease forwards";
+  });
+}
       },50);
 
     } else {
@@ -738,6 +774,7 @@ barEl.style.background = colors[Math.floor(Math.random()*colors.length)];
 
 </body>
 </html>
+
 
 
 
