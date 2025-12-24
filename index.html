@@ -85,6 +85,15 @@ button:hover { background:#1d4ed8; }
 }
 
 /* ---------- DASHBOARD ---------- */
+
+  .progress-text {
+  cursor: pointer;
+  user-select: none;
+}
+.progress-text.active {
+  color: #f472b6;
+}
+
 .progress-text {
   font-size: 13px;
   opacity: 0.7;
@@ -702,12 +711,14 @@ if (overthinkingValue && overthinkingBar) {
 
   let index = 0;
 
+  overthinkingValue.style.cursor = "pointer";
+  overthinkingValue.title = "Click for analytics mode";
+
   overthinkingValue.addEventListener("click", (e) => {
     e.stopPropagation();
     index = (index + 1) % states.length;
 
     overthinkingValue.textContent = states[index].label;
-    overthinkingValue.classList.add("active");
     overthinkingValue.title = states[index].note;
 
     overthinkingBar.style.setProperty("--w", states[index].width);
@@ -716,6 +727,7 @@ if (overthinkingValue && overthinkingBar) {
     overthinkingBar.style.animation = "fillBar 0.6s ease forwards";
   });
 }
+
       },50);
 
     } else {
@@ -774,6 +786,7 @@ barEl.style.background = colors[Math.floor(Math.random()*colors.length)];
 
 </body>
 </html>
+
 
 
 
