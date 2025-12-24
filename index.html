@@ -85,73 +85,6 @@ button:hover { background:#1d4ed8; }
 }
 
 /* ---------- DASHBOARD ---------- */
-  /* ---------- Phase 3: Envelope ---------- */
-
-.envelope-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.6);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-  z-index: 40;
-}
-
-.envelope-overlay.visible {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.envelope {
-  width: 220px;
-  height: 140px;
-  background: #f8fafc;
-  border-radius: 8px;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-  animation: envelopePop 0.4s ease;
-}
-
-@keyframes envelopePop {
-  from { transform: scale(0.9); opacity: 0; }
-  to   { transform: scale(1); opacity: 1; }
-}
-
-.flap {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 70%;
-  background: #e5e7eb;
-  transform-origin: top;
-  animation: flapOpen 1s ease forwards;
-}
-
-@keyframes flapOpen {
-  0%   { transform: rotateX(0deg); }
-  100% { transform: rotateX(180deg); }
-}
-
-.letter {
-  position: absolute;
-  bottom: 16px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 32px;
-  opacity: 0;
-  animation: letterRise 0.8s ease forwards;
-  animation-delay: 0.6s;
-}
-
-@keyframes letterRise {
-  to { transform: translate(-50%, -20px); opacity: 1; }
-}
-
 .progress-text {
   font-size: 13px;
   opacity: 0.7;
@@ -664,17 +597,14 @@ Delivered without metrics.
         const downloadBtn=document.getElementById("downloadBtn");
         const pdfEmbed=document.getElementById("pdfEmbed");
 
-const envelopeOverlay = document.getElementById("envelopeOverlay");
-
-openNoteBtn.onclick = () => {
-  envelopeOverlay.classList.add("visible");
+       openNoteBtn.onclick = () => {
+  openNoteBtn.classList.add("opening");
 
   setTimeout(() => {
-    envelopeOverlay.classList.remove("visible");
     overlay.classList.add("visible");
-  }, 1600); // envelope plays, then note opens
+    openNoteBtn.classList.remove("opening");
+  }, 600);
 };
-
 
         closeBtn.onclick = () => overlay.classList.remove("visible");
         overlay.onclick = (e) => { if(e.target===overlay) overlay.classList.remove("visible"); };
@@ -879,18 +809,9 @@ barEl.style.background = colors[Math.floor(Math.random()*colors.length)];
 
 
 </script>
-<!-- Phase 3: Envelope -->
-<div class="envelope-overlay" id="envelopeOverlay">
-  <div class="envelope">
-    <div class="flap"></div>
-    <div class="letter">💌</div>
-  </div>
-</div>
 
 </body>
 </html>
-
-
 
 
 
