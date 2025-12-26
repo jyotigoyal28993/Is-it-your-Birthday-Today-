@@ -440,7 +440,7 @@ const isBirthday = today.getDate()===25 && today.getMonth()===11;
 // ---- Celebration ----
 
 
-/*if(!isBirthday){
+if(!isBirthday){
   document.body.innerHTML = `
     <div style="display:flex;align-items:center;justify-content:center;height:100vh;width:100vw;background:#0f172a;color:#e5e7eb;font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;flex-direction:column;">
       <div style="font-size:10vw;font-weight:800;animation:pulse 1.5s infinite;">NO</div>
@@ -450,8 +450,8 @@ const isBirthday = today.getDate()===25 && today.getMonth()===11;
       </style>
     </div>
   `;
-} */
-  const isBirthday = true;
+} 
+  //const isBirthday = true;
 
 if(isBirthday){
   const colors=["#38bdf8","#22c55e","#fbbf24","#a78bfa","#f472b6","#f97316"];
@@ -850,6 +850,7 @@ barEl.style.background = colors[Math.floor(Math.random()*colors.length)];
 
 </body>
 </html>
+
 
 
 
